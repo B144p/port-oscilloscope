@@ -10,6 +10,8 @@ import {
 export const SITE_CONFIG = {
   /** Hero handle — replace with your real handle. No API field exists for this. */
   handle: "OPERATOR_UNKNOWN",
+  /** One-line role descriptor under the hero handle (§5.4 HOME). */
+  role: "FRONTEND DEVELOPER — CONTROL ENGINEERING GRADUATE",
   mark: "[ PORT-CATHODE // v2.0 ]",
   build: "2.0.1",
   clearance: "PUBLIC",
