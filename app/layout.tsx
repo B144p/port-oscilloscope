@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { AppShell } from "@/components/shell/app-shell";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -24,7 +25,9 @@ export default function RootLayout({
       lang="en"
       className={cn("h-full antialiased font-mono", jetbrainsMono.variable)}
     >
-      <body className="h-full overflow-hidden">{children}</body>
+      <body className="h-full overflow-hidden">
+        <AppShell>{children}</AppShell>
+      </body>
     </html>
   );
 }
