@@ -7,6 +7,7 @@ import { statisticQuery } from "@/lib/queries";
 import type { Statistic } from "@/lib/types";
 import { ContributionChart } from "./contribution-chart";
 import { GaugeRow } from "./gauge-row";
+import { LanguageRadar } from "./language-radar";
 
 /** §5.4 — bar fills reserve amber/red for status meaning elsewhere. */
 const OS_FILL_VARS = ["--green-bright", "--green-mid", "--green-dim"];
@@ -16,7 +17,7 @@ function Languages({ statistic }: { statistic: Statistic }) {
   return (
     <div className="flex flex-col gap-6">
       <h2 className="text-2xl font-medium text-green-bright">LANGUAGES</h2>
-      {/* Radar chart lands with the chart pass */}
+      <LanguageRadar languages={statistic.languages} />
       <div className="flex flex-col gap-3">
         {statistic.languages.map((lang) => (
           <GaugeRow
