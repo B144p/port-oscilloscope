@@ -8,9 +8,7 @@ import type { Statistic } from "@/lib/types";
 import { ContributionChart } from "./contribution-chart";
 import { GaugeRow } from "./gauge-row";
 import { LanguageRadar } from "./language-radar";
-
-/** §5.4 — bar fills reserve amber/red for status meaning elsewhere. */
-const OS_FILL_VARS = ["--green-bright", "--green-mid", "--green-dim"];
+import { OS_FILL_VARS, OsDonut } from "./os-donut";
 
 function Languages({ statistic }: { statistic: Statistic }) {
   if (!statistic.languages.length) return <EmptyState />;
@@ -42,6 +40,7 @@ function OperatingSystem({ statistic }: { statistic: Statistic }) {
       <h2 className="text-2xl font-medium text-green-bright">
         OPERATING SYSTEM
       </h2>
+      <OsDonut operatingSystems={statistic.operatingSystems} />
       <div className="flex max-w-[70ch] flex-col gap-4">
         {statistic.operatingSystems.map((os, i) => (
           <GaugeRow
@@ -50,6 +49,7 @@ function OperatingSystem({ statistic }: { statistic: Statistic }) {
             totalSeconds={os.totalSeconds}
             percent={os.percent}
             fillVar={OS_FILL_VARS[i % OS_FILL_VARS.length]}
+            dotLeader
           />
         ))}
       </div>
