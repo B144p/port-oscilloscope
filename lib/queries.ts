@@ -38,7 +38,11 @@ export const statisticQuery = queryOptions({
   queryFn: getStatistic,
 });
 
-/** Everything the boot sequence prefetches in parallel (§6). */
+/**
+ * Everything the boot sequence prefetches in parallel (§6). Widened to
+ * FetchQueryOptions because prefetchQuery can't accept the heterogeneous
+ * union the tuple would otherwise infer.
+ */
 export const ALL_QUERIES = [
   aboutMeQuery,
   educationQuery,
@@ -46,4 +50,4 @@ export const ALL_QUERIES = [
   projectsQuery,
   contactsQuery,
   statisticQuery,
-] as const;
+] as readonly import("@tanstack/react-query").FetchQueryOptions[];

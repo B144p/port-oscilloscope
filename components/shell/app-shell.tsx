@@ -1,6 +1,7 @@
 "use client";
 
 import { BackgroundLayer } from "@/components/background-layer";
+import { BootSequence } from "@/components/boot-sequence";
 import { ChannelSwitch } from "@/components/channel-switch";
 import { Monitor } from "@/components/monitor";
 import { Scanlines } from "@/components/scanlines";
@@ -22,6 +23,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <>
       <BackgroundLayer />
       <Scanlines />
+      <BootSequence />
       <div className="grid h-dvh grid-cols-[200px_1fr_280px] grid-rows-[48px_1fr_28px] gap-[14px] overflow-hidden p-[14px]">
         <Header />
         <LeftNav />
