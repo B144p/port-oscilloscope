@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import { ChannelSwitch } from "@/components/channel-switch";
 import { Monitor } from "@/components/monitor";
 import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
 import { useChannel } from "@/hooks/use-channel";
@@ -215,11 +216,13 @@ export function RightPanel() {
 
   return (
     <Monitor title={`${channel.label} // INDEX`}>
-      {channel.label === "HOME" && <HomePanel />}
-      {channel.label === "ABOUT" && <AboutPanel />}
-      {channel.label === "STATISTICS" && <StatisticsPanel />}
-      {channel.label === "PROJECTS" && <ProjectsPanel />}
-      {channel.label === "CONTACT" && <ContactPanel />}
+      <ChannelSwitch switchKey={channel.segment} severity="full" delayMs={50}>
+        {channel.label === "HOME" && <HomePanel />}
+        {channel.label === "ABOUT" && <AboutPanel />}
+        {channel.label === "STATISTICS" && <StatisticsPanel />}
+        {channel.label === "PROJECTS" && <ProjectsPanel />}
+        {channel.label === "CONTACT" && <ContactPanel />}
+      </ChannelSwitch>
     </Monitor>
   );
 }

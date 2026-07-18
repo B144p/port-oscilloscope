@@ -193,6 +193,136 @@
   --animate-cursor-blink: cursor-blink 1s steps(1) infinite;
 }
 
+/* §4.1 full CRT sequence (~300ms): collapse → static → expand → roll+lock.
+   linear/steps() only — smooth easing reads organic, this must read
+   mechanical. 0%=start, 20%=60ms, 43%=130ms, 77%=230ms, 100%=300ms. */
+@keyframes crt-full {
+  0% {
+    transform: scaleY(1);
+    filter: brightness(1);
+    opacity: 1;
+  }
+  20% {
+    transform: scaleY(0.004);
+    filter: brightness(3);
+  }
+  43% {
+    transform: scaleY(0.004);
+    filter: brightness(3);
+  }
+  77% {
+    transform: scaleY(1) translateY(-6px);
+    filter: brightness(1);
+    opacity: 1;
+  }
+  83% {
+    opacity: 0.7;
+    transform: scaleY(1) translateY(-2px);
+  }
+  96% {
+    opacity: 1;
+    transform: scaleY(1) translateY(0);
+  }
+  100% {
+    transform: none;
+    filter: none;
+    opacity: 1;
+  }
+}
+
+/* §4 light variant (~120ms): quick blip, no static, no tear. */
+@keyframes crt-light {
+  0% {
+    transform: scaleY(0.97);
+    filter: brightness(2);
+    opacity: 0.4;
+  }
+  60% {
+    transform: scaleY(1);
+    filter: brightness(1.3);
+    opacity: 0.85;
+  }
+  100% {
+    transform: none;
+    filter: none;
+    opacity: 1;
+  }
+}
+
+/* Noise flash during the static window (20–43%), with a horizontal
+   jitter standing in for the tear. Hidden below 768px (§8.2). */
+@keyframes crt-noise {
+  0%, 18% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  20% {
+    opacity: 0.5;
+    transform: translateX(-8px);
+  }
+  28% {
+    opacity: 0.35;
+    transform: translateX(8px);
+  }
+  36% {
+    opacity: 0.5;
+    transform: translateX(-5px);
+  }
+  43%, 100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+}
+
+@keyframes crt-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: var(--typewriter-width);
+  }
+}
+
+@theme inline {
+  --animate-crt-full: crt-full 300ms linear both;
+  --animate-crt-light: crt-light 120ms linear both;
+  --animate-crt-noise: crt-noise 300ms steps(3, jump-none) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* §4.3 / §9 — the whole sequence collapses to a 100ms crossfade;
+     noise, flicker, blink, and typewriter die entirely. */
+  .animate-crt-full,
+  .animate-crt-light {
+    animation: crt-fade 100ms linear both !important;
+  }
+  .animate-crt-noise,
+  .animate-row-flicker,
+  .animate-cursor-blink {
+    animation: none !important;
+    opacity: 0;
+  }
+  .animate-row-flicker {
+    opacity: 1;
+  }
+  .animate-cursor-blink {
+    opacity: 1;
+  }
+  .animate-typewriter {
+    animation: none !important;
+    width: auto !important;
+  }
+}
+
 /* §3.1 grid drift — transform only, loops exactly one 32px pitch */
 @keyframes grid-drift {
   from {
