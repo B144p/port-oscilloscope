@@ -28,6 +28,29 @@ Build production-ready design systems with Tailwind CSS v4, including CSS-first 
 | `theme.extend.colors`                 | `@theme { --color-*: value }`                                         |
 | `require("tailwindcss-animate")`      | CSS `@keyframes` in `@theme` + `@starting-style` for entry animations |
 
+## Check for an existing token spec before generating any
+
+The `@theme` block below ships with its own semantic token names and default OKLCH
+values (light background, dark-mode overrides, `--radius-lg: 0.5rem`, etc). Those
+defaults are a starting point for a truly greenfield project — not something to lay
+down unconditionally.
+
+Before writing a single `--color-*` or `--radius-*` value, check whether the project
+already has its own design tokens: a design/build spec doc, an existing `globals.css`
+with `:root` custom properties, or explicit token values given in the prompt. If any of
+those exist, treat them as the source of truth and do **not** emit this skill's default
+color values, semantic names, or radius scale — a second competing token system is worse
+than no system, because the project's real tokens end up looking like an "override"
+fighting the skill's defaults instead of being authoritative from the outset. In that
+case, take only the structural/mechanical patterns from this skill (the CSS-first
+`@theme` mechanics, the `@custom-variant dark (...)` wiring, container queries, the
+CVA-variant boilerplate patterns) and slot the project's own token names/values into
+that structure.
+
+Only use this skill's own default palette and token names when the project has no
+existing token spec at all — a genuine greenfield scaffold with no design direction
+given yet.
+
 ## Quick Start
 
 ```css
