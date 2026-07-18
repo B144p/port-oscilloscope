@@ -14,9 +14,12 @@ export function formatRange(start: number, end: number | null): string {
   return `${formatMonthYear(start)} – ${end ? formatMonthYear(end) : "PRESENT"}`;
 }
 
-/** Seconds → whole hours, e.g. "142H" */
+/** Seconds → hours and minutes, e.g. "142H 30M" */
 export function formatHours(totalSeconds: number): string {
-  return `${Math.round(totalSeconds / 3600)}H`;
+  const totalMinutes = Math.round(totalSeconds / 60);
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  return `${hours}H ${minutes}M`;
 }
 
 export function formatPercent(percent: number): string {

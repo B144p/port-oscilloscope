@@ -14,7 +14,7 @@ import type { LanguageStat } from "@/lib/types";
 const RADAR_AXES = 6;
 
 const chartConfig = {
-  hours: { label: "Hours", color: "var(--chart-2)" },
+  value: { label: "Hours", color: "var(--chart-2)" },
 };
 
 /** §5.4 — tooltip rebuilt in the monitor language; stock styling is banned. */
@@ -23,7 +23,9 @@ function RadarTooltip({
   payload,
 }: {
   active?: boolean;
-  payload?: Array<{ payload: { language: string; seconds: number; percent: number } }>;
+  payload?: Array<{
+    payload: { language: string; hours: number; seconds: number; percent: number };
+  }>;
 }) {
   if (!active || !payload?.length) return null;
   const point = payload[0].payload;
@@ -38,12 +40,16 @@ function RadarTooltip({
 }
 
 export function LanguageRadar({ languages }: { languages: LanguageStat[] }) {
-  const data = languages.slice(0, RADAR_AXES).map((lang) => ({
-    language: lang.language.toUpperCase(),
-    hours: Math.round(lang.totalSeconds / 3600),
-    seconds: lang.totalSeconds,
-    percent: lang.percent,
-  }));
+  const data = languages.slice(0, RADAR_AXES).map((lang) => {
+    const hours = lang.totalSeconds / 3600;
+    return {
+      language: lang.language.toUpperCase(),
+      value: Math.cbrt(hours),
+      hours: Math.round(hours),
+      seconds: lang.totalSeconds,
+      percent: lang.percent,
+    };
+  });
 
   return (
     <ChartContainer
@@ -62,7 +68,7 @@ export function LanguageRadar({ languages }: { languages: LanguageStat[] }) {
         />
         <ChartTooltip content={<RadarTooltip />} isAnimationActive={false} />
         <Radar
-          dataKey="hours"
+          dataKey="value"
           stroke="var(--green-mid)"
           strokeWidth={1}
           fill="var(--green-mid)"

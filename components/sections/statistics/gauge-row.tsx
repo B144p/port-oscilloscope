@@ -1,6 +1,7 @@
 "use client";
 
 import { formatHours, formatPercent } from "@/lib/format";
+import { useMemo } from "react";
 
 /**
  * Label + hours + percent + bar gauge. A control panel is full of bar
@@ -12,6 +13,7 @@ export function GaugeRow({
   percent,
   fillVar,
   dotLeader = false,
+  balance = "none",
 }: {
   label: string;
   totalSeconds: number;
@@ -19,7 +21,19 @@ export function GaugeRow({
   /** CSS custom property name for the fill, e.g. "--green-mid" */
   fillVar: string;
   dotLeader?: boolean;
+  balance?: "none" | "squre" | "qube";
 }) {
+  const gaugeWidth = useMemo(() => {
+    switch (balance) {
+      case "squre":
+        return Math.sqrt(percent / 100) * 100;
+      case "qube":
+        return Math.cbrt(percent / 100) * 100;
+      default:
+        return percent;
+    }
+  }, [balance, percent]);
+
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-baseline gap-2 text-[13px]">
@@ -53,7 +67,7 @@ export function GaugeRow({
       >
         <div
           className="h-full"
-          style={{ width: `${percent}%`, background: `var(${fillVar})` }}
+          style={{ width: `${gaugeWidth}%`, background: `var(${fillVar})` }}
         />
       </div>
     </div>

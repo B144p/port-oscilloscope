@@ -19,7 +19,7 @@ function Languages({ statistic }: { statistic: Statistic }) {
       <h2 className="text-2xl font-medium text-green-bright">LANGUAGES</h2>
       <LanguageRadar languages={statistic.languages} />
       <div className="flex flex-col gap-3">
-        {statistic.languages.map((lang) => (
+        {statistic.languages.slice(0, 6).map((lang) => (
           <GaugeRow
             key={lang.id}
             label={lang.language}
@@ -27,6 +27,7 @@ function Languages({ statistic }: { statistic: Statistic }) {
             percent={lang.percent}
             fillVar="--green-mid"
             dotLeader
+            balance="squre"
           />
         ))}
       </div>
