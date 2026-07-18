@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 function pad(n: number): string {
   return String(n).padStart(2, "0");
@@ -15,20 +15,26 @@ export function formatClock(d: Date): string {
   return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())} GMT${sign}${offset}`;
 }
 
+function subscribe(onChange: () => void): () => void {
+  const id = setInterval(onChange, 1000);
+  return () => clearInterval(id);
+}
+
 /**
- * §5.5 — machine-timezone clock. Renders a placeholder until mounted:
- * emitting Date.now() during SSR is a guaranteed hydration mismatch.
+ * §5.5 — machine-timezone clock. useSyncExternalStore renders the
+ * server snapshot (null → placeholder) during SSR/hydration, so no
+ * Date ever reaches server markup — the classic mismatch here.
  */
 export function Clock() {
-  const [now, setNow] = useState<Date | null>(null);
-
-  useEffect(() => {
-    setNow(new Date());
-    const id = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(id);
-  }, []);
+  const seconds = useSyncExternalStore(
+    subscribe,
+    () => Math.floor(Date.now() / 1000),
+    () => null,
+  );
 
   return (
-    <span className="tabular-nums">{now ? formatClock(now) : "--:--:-- GMT+0"}</span>
+    <span className="tabular-nums">
+      {seconds !== null ? formatClock(new Date(seconds * 1000)) : "--:--:-- GMT+0"}
+    </span>
   );
 }

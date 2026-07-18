@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -25,15 +25,19 @@ export function ChannelSwitch({
   className?: string;
   children: React.ReactNode;
 }) {
-  const firstMountRef = useRef(true);
-  useEffect(() => {
-    firstMountRef.current = false;
-  }, []);
+  // The very first key never animates; any later key change does — even
+  // navigating back to the initial key. Render-phase state adjustment
+  // instead of a ref: refs must not be read during render.
+  const [initialKey] = useState(switchKey);
+  const [everChanged, setEverChanged] = useState(false);
+  if (!everChanged && switchKey !== initialKey) {
+    setEverChanged(true);
+  }
 
   return (
     <Keyed
       key={switchKey}
-      animate={!firstMountRef.current}
+      animate={everChanged || switchKey !== initialKey}
       severity={severity}
       delayMs={delayMs}
       className={className}

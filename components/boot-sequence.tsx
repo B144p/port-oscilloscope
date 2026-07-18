@@ -36,6 +36,7 @@ export function BootSequence() {
     if (sessionStorage.getItem(BOOTED_FLAG)) {
       // Warm the cache silently on in-session reloads.
       prefetch();
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- mount-only sessionStorage gate, runs once
       setPhase("done");
       return;
     }

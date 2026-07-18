@@ -3,6 +3,7 @@
 import { BackgroundLayer } from "@/components/background-layer";
 import { BootSequence } from "@/components/boot-sequence";
 import { ChannelSwitch } from "@/components/channel-switch";
+import { EasterEggTerminal } from "@/components/easter-egg/terminal";
 import { Monitor } from "@/components/monitor";
 import { Scanlines } from "@/components/scanlines";
 import { Header } from "@/components/shell/header";
@@ -47,6 +48,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <LogStrip />
       </div>
       <PhoneShell />
+      <EasterEggTerminal />
     </>
   );
 }

@@ -16,6 +16,7 @@ export function HomeSection() {
   useEffect(() => {
     if (!sessionStorage.getItem("pc-typed")) {
       sessionStorage.setItem("pc-typed", "1");
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- mount-only sessionStorage gate, runs once
       setTypewriter(true);
     }
   }, []);

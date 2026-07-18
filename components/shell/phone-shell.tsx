@@ -300,11 +300,13 @@ export function PhoneShell() {
 
       <Monitor className="min-h-0 flex-1" contentClassName="h-full overflow-y-auto p-3">
         <ChannelSwitch switchKey={pathname} severity="full">
-          {channel.label === "HOME" && <HomePhone />}
-          {channel.label === "ABOUT" && <AboutPhone />}
-          {channel.label === "STATISTICS" && <StatisticsPhone />}
-          {channel.label === "PROJECTS" && <ProjectsPhone />}
-          {channel.label === "CONTACT" && <ContactSection />}
+          <main>
+            {channel.label === "HOME" && <HomePhone />}
+            {channel.label === "ABOUT" && <AboutPhone />}
+            {channel.label === "STATISTICS" && <StatisticsPhone />}
+            {channel.label === "PROJECTS" && <ProjectsPhone />}
+            {channel.label === "CONTACT" && <ContactSection />}
+          </main>
         </ChannelSwitch>
       </Monitor>
     </div>

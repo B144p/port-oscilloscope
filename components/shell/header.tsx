@@ -49,7 +49,7 @@ export function Header() {
           </span>
           <span className="flex min-w-0 items-center gap-4">
             <span className="uppercase tracking-[0.05em] text-green-mid">
-              CH.{channel.number} // {channel.label}
+              {`CH.${channel.number} // ${channel.label}`}
             </span>
             <span className="hidden truncate text-[11px] uppercase tracking-[0.05em] text-text-muted lg:inline">
               {readout}
