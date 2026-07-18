@@ -8,17 +8,21 @@ export function Monitor({
   title,
   className,
   contentClassName,
+  allowOverflow = false,
   children,
 }: {
   title?: string;
   className?: string;
   contentClassName?: string;
+  /** The tablet rail's hover tooltips must escape the bezel (§8.1). */
+  allowOverflow?: boolean;
   children: React.ReactNode;
 }) {
   return (
     <section
       className={cn(
-        "monitor-chassis monitor-ticks relative flex min-h-0 flex-col overflow-hidden rounded-lg border border-green-dim",
+        "monitor-chassis monitor-ticks relative flex min-h-0 flex-col rounded-lg border border-green-dim",
+        allowOverflow ? "overflow-visible" : "overflow-hidden",
         className,
       )}
     >

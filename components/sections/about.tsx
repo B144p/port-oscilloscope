@@ -11,7 +11,7 @@ import {
   experienceQuery,
 } from "@/lib/queries";
 
-function Overall() {
+export function Overall() {
   const { data, isPending, isError, refetch } = useQuery(aboutMeQuery);
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState onRetry={refetch} />;
@@ -30,7 +30,7 @@ function Overall() {
   );
 }
 
-function Education({ entryId }: { entryId?: string }) {
+export function Education({ entryId }: { entryId?: string }) {
   const { data, isPending, isError, refetch } = useQuery(educationQuery);
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState onRetry={refetch} />;
@@ -56,7 +56,7 @@ function Education({ entryId }: { entryId?: string }) {
   );
 }
 
-function Experience({ entryId }: { entryId?: string }) {
+export function Experience({ entryId }: { entryId?: string }) {
   const { data, isPending, isError, refetch } = useQuery(experienceQuery);
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState onRetry={refetch} />;
