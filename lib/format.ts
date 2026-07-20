@@ -1,4 +1,4 @@
-const MONTHS = [
+export const MONTHS = [
   "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
   "JUL", "AUG", "SEP", "OCT", "NOV", "DEC",
 ];
@@ -7,6 +7,12 @@ const MONTHS = [
 export function formatMonthYear(unixSeconds: number): string {
   const d = new Date(unixSeconds * 1000);
   return `${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+}
+
+/** Unix seconds (day) → "JUL 20, 2026" */
+export function formatDayLabel(unixSeconds: number): string {
+  const d = new Date(unixSeconds * 1000);
+  return `${MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
 }
 
 /** Unix seconds pair → "FEB 2023 – JUN 2025" (open end → "PRESENT") */
