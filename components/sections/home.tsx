@@ -25,7 +25,7 @@ export function HomeSection() {
     <div className="flex h-full flex-col justify-center gap-4">
       <h1
         className={cn(
-          "overflow-hidden whitespace-nowrap text-5xl font-medium tracking-tight text-green-bright xl:text-6xl",
+          "overflow-hidden whitespace-nowrap text-3xl font-medium tracking-tight text-green-bright sm:text-4xl md:text-5xl xl:text-6xl",
           typewriter && "animate-typewriter",
         )}
         style={

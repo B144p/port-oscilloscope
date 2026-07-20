@@ -50,6 +50,7 @@ function PanelLink({
       )}
     >
       {indent ? <span className="mr-1 text-text-muted">└─</span> : null}
+      {active && !indent ? <span className="mr-2">&gt;</span> : null}
       {label}
     </Link>
   );

@@ -66,7 +66,7 @@ function Accordion({ items, openId }: { items: AccordionItem[]; openId: string }
                 <span className="truncate">{item.label}</span>
                 {item.right}
               </span>
-              <span aria-hidden className="shrink-0">
+              <span aria-hidden className="shrink-0 text-xl">
                 {open ? "−" : "+"}
               </span>
             </Link>
@@ -222,12 +222,11 @@ function HomePhone() {
   const quote = aboutMe?.mission ?? "Signal locked. All instruments nominal.";
   return (
     <div className="flex flex-col gap-6">
-      {/* Right-sidebar content precedes the detail it frames (§8.2). */}
-      <blockquote className="border-b border-green-dim/40 pb-4 text-[13px] leading-[1.6] text-text-muted">
+      <HomeSection />
+      <blockquote className="border-t border-green-dim/40 pt-4 text-[13px] leading-[1.6] text-text-muted">
         <span className="mr-2">&gt;</span>
         {quote}
       </blockquote>
-      <HomeSection />
     </div>
   );
 }

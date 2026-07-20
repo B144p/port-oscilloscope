@@ -41,7 +41,7 @@ function OperatingSystem({ statistic }: { statistic: Statistic }) {
         OPERATING SYSTEM
       </h2>
       <OsDonut operatingSystems={statistic.operatingSystems} />
-      <div className="flex max-w-[70ch] flex-col gap-4">
+      <div className="flex flex-col gap-4">
         {statistic.operatingSystems.map((os, i) => (
           <GaugeRow
             key={os.id}
