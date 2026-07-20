@@ -12,8 +12,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PORT-CATHODE",
-  description: "Developer portfolio — cathode control panel interface.",
+  title: "OSCILLOSCOPE",
+  description: "Developer portfolio — oscilloscope control panel interface.",
 };
 
 export default function RootLayout({

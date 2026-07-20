@@ -13,7 +13,7 @@ export const SITE_CONFIG = {
   handle: "OPERATOR-BT_144P",
   /** One-line role descriptor under the hero handle (§5.4 HOME). */
   role: "SOFTWARE ENGINEER — WHO LOST IN MIND",
-  mark: "[ PORT-CATHODE // v1.0 ]",
+  mark: "[ OSCILLOSCOPE // v1.0 ]",
   build: "2.0.1",
   clearance: "PUBLIC",
 } as const;

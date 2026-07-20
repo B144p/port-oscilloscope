@@ -5,7 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { ALL_QUERIES } from "@/lib/queries";
 
 const BOOT_LINES = [
-  "INITIALIZING CATHODE INTERFACE...",
+  "INITIALIZING OSCILLOSCOPE INTERFACE...",
   "ESTABLISHING LINK TO PORT-SERVER...",
   "FETCHING DATA VAULT...",
   "LINK ESTABLISHED.",

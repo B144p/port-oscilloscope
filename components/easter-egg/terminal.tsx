@@ -10,7 +10,7 @@ import { CHANNELS, SITE_CONFIG } from "@/lib/site-config";
 export function EasterEggTerminal() {
   const [open, setOpen] = useState(false);
   const [lines, setLines] = useState<string[]>([
-    "CATHODE SUBSHELL v0.1 — TYPE 'help'",
+    "OSCILLOSCOPE SUBSHELL v0.1 — TYPE 'help'",
   ]);
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
