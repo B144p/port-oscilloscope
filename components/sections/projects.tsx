@@ -12,6 +12,17 @@ import {
 import { projectsQuery } from "@/lib/queries";
 import { cn } from "@/lib/utils";
 
+/** `preview` is either a live demo or a source repo — never both — so one button, labeled by host. */
+function previewLabel(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "") === "github.com"
+      ? "SOURCE"
+      : "WEBSITE";
+  } catch {
+    return "LINK";
+  }
+}
+
 /** §5.4 PROJECTS — instrument readout for the selected project. */
 export function ProjectsSection() {
   const params = useParams<{ slug?: string[] }>();
@@ -24,6 +35,7 @@ export function ProjectsSection() {
 
   const project = (slug ? resolveProject(data, slug) : undefined) ?? data[0];
   const status = PROJECT_STATUS_META[getProjectStatus(project)];
+  const linkLabel = project.preview ? previewLabel(project.preview) : null;
 
   return (
     <DataReadout
@@ -54,6 +66,23 @@ export function ProjectsSection() {
             </span>
           ),
         },
+        ...(project.preview && linkLabel
+          ? [
+              {
+                label: linkLabel,
+                value: (
+                  <a
+                    href={project.preview}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex w-fit items-center gap-1 rounded-lg border border-green-dim px-2 py-0.5 text-[11px] uppercase tracking-[0.05em] text-green-mid transition-colors hover:border-green-bright hover:text-green-bright"
+                  >
+                    OPEN {linkLabel} ↗
+                  </a>
+                ),
+              },
+            ]
+          : []),
       ]}
     >
       <p>{project.description}</p>
