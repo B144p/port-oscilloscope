@@ -23,7 +23,7 @@ export function Overall() {
     <DataReadout title="OVERALL" fields={[]}>
       <div className="flex flex-col gap-4">
         {paragraphs.map((p, i) => (
-          <p key={i}>{p}</p>
+          <p key={i} className="indent-8">{p}</p>
         ))}
       </div>
     </DataReadout>

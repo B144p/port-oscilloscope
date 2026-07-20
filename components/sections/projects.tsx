@@ -44,7 +44,9 @@ export function ProjectsSection() {
         {
           label: "STATUS",
           value: (
-            <span className={cn("uppercase tracking-[0.05em]", status.colorClass)}>
+            <span
+              className={cn("uppercase tracking-[0.05em]", status.colorClass)}
+            >
               ● {status.label}
             </span>
           ),
@@ -83,9 +85,11 @@ export function ProjectsSection() {
               },
             ]
           : []),
+        {
+          label: "DESCRIPTION",
+          value: project.description,
+        },
       ]}
-    >
-      <p>{project.description}</p>
-    </DataReadout>
+    />
   );
 }
