@@ -184,7 +184,7 @@ function ProjectsPanel() {
               active ? "text-green-bright" : "text-green-dim hover:text-green-mid",
             )}
           >
-            <span className="truncate">{project.title}</span>
+            <span className="truncate">{active && '>'} {project.title}</span>
             <span aria-hidden className={cn("text-[9px]", status.colorClass)}>
               ●
             </span>

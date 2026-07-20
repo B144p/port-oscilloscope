@@ -63,10 +63,10 @@ export function StatisticsSection() {
   const [view = "languages"] = params.view ?? [];
   const { data, isPending, isError, refetch } = useQuery(statisticQuery);
 
-  if (view === "contributions") return <ContributionChart />;
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState onRetry={refetch} />;
 
+  if (view === "contributions") return <ContributionChart statistic={data} />;
   if (view === "operating-system") return <OperatingSystem statistic={data} />;
   return <Languages statistic={data} />;
 }
