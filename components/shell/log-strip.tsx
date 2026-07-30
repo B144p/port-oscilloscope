@@ -2,7 +2,10 @@
 
 import { useState, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 import { Clock } from "@/components/shell/clock";
+import { FRONTEND_VERSION_KEY } from "@/lib/api";
+import { frontendVersionQuery } from "@/lib/queries";
 
 function pad(n: number): string {
   return String(n).padStart(2, "0");
@@ -28,6 +31,7 @@ export function LogStrip() {
     () => true,
     () => false,
   );
+  const { data: versionData } = useQuery(frontendVersionQuery);
 
   const [log, setLog] = useState<{ path: string | null; lines: string[] }>({
     path: null,
@@ -41,11 +45,15 @@ export function LogStrip() {
   }
   const latest = log.lines[log.lines.length - 1];
 
+  const mine = versionData?.versions.find((v) => v.key === FRONTEND_VERSION_KEY);
+  const views =
+    versionData && mine ? `${mine.views}/${versionData.totalViews}` : "---";
+
   return (
     <div className="col-span-3 hidden items-center justify-between gap-4 overflow-hidden whitespace-nowrap text-[11px] text-text-muted md:flex">
       <span className="truncate">{latest ?? "[--:--:--] SYSTEM IDLE"}</span>
       <span className="flex shrink-0 items-center gap-4">
-        <span>VIEWS: ---</span>
+        <span title="this version / all versions">VIEWS: {views}</span>
         <Clock />
       </span>
     </div>
