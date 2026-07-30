@@ -3,23 +3,25 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ErrorState, LoadingState } from "@/components/states";
+import { useIdentity } from "@/hooks/use-identity";
 import { aboutMeQuery } from "@/lib/queries";
-import { SITE_CONFIG } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
 export function HomeSection() {
   const { data, isPending, isError, refetch } = useQuery(aboutMeQuery);
+  const { handle, role, isPending: identityPending } = useIdentity();
   // §5.4 — typewriter reveal on first load only. sessionStorage is
   // read after mount; SSR and replays render the handle statically.
   const [typewriter, setTypewriter] = useState(false);
 
   useEffect(() => {
-    if (!sessionStorage.getItem("pc-typed")) {
-      sessionStorage.setItem("pc-typed", "1");
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- mount-only sessionStorage gate, runs once
-      setTypewriter(true);
-    }
-  }, []);
+    // Wait for about-me to settle so the step count matches the final handle.
+    if (identityPending) return;
+    if (sessionStorage.getItem("pc-typed")) return;
+    sessionStorage.setItem("pc-typed", "1");
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot sessionStorage gate, runs once identity settles
+    setTypewriter(true);
+  }, [identityPending]);
 
   return (
     <div className="flex h-full flex-col justify-center gap-4">
@@ -31,13 +33,13 @@ export function HomeSection() {
         style={
           typewriter
             ? ({
-                "--typewriter-width": `${SITE_CONFIG.handle.length}ch`,
-                animation: `typewriter 1.2s steps(${SITE_CONFIG.handle.length}) both`,
+                "--typewriter-width": `${handle.length}ch`,
+                animation: `typewriter 1.2s steps(${handle.length}) both`,
               } as React.CSSProperties)
             : undefined
         }
       >
-        {SITE_CONFIG.handle}
+        {handle}
       </h1>
       {isPending ? (
         <LoadingState />
@@ -45,7 +47,7 @@ export function HomeSection() {
         <ErrorState onRetry={refetch} />
       ) : (
         <p className="max-w-[70ch] text-base leading-[1.6] text-green-mid">
-          {SITE_CONFIG.role}
+          {role}
         </p>
       )}
       <p className="text-[11px] uppercase tracking-[0.05em] text-text-muted">

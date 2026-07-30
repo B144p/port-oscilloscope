@@ -8,14 +8,19 @@ import {
 } from "@phosphor-icons/react";
 
 export const SITE_CONFIG = {
-  /** Hero handle — replace with your real handle. No API field exists for this. */
-  // handle: "OPERATOR_UNKNOWN",
-  handle: "OPERATOR-BT_144P",
-  /** One-line role descriptor under the hero handle (§5.4 HOME). */
-  role: "SOFTWARE ENGINEER — WHO LOST IN MIND",
   mark: "[ OSCILLOSCOPE // v1.0 ]",
   build: "2.0.1",
   clearance: "PUBLIC",
+} as const;
+
+/**
+ * Hero identity comes from GET /v1/about-me (`handle`, `role`). These are the
+ * fallbacks for when those fields are null — they are unset in the DB today,
+ * so this is the live path, not a rare edge case.
+ */
+export const IDENTITY_FALLBACK = {
+  handle: "OPERATOR-BT_144P",
+  role: "SOFTWARE ENGINEER — WHO LOST IN MIND",
 } as const;
 
 export interface Channel {
