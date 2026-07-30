@@ -4,6 +4,7 @@ import {
   getContacts,
   getEducation,
   getExperience,
+  getFrontendVersion,
   getProjects,
   getStatistic,
 } from "@/lib/api";
@@ -38,6 +39,11 @@ export const statisticQuery = queryOptions({
   queryFn: getStatistic,
 });
 
+export const frontendVersionQuery = queryOptions({
+  queryKey: ["frontend-version"],
+  queryFn: getFrontendVersion,
+});
+
 /**
  * Everything the boot sequence prefetches in parallel (§6). Widened to
  * FetchQueryOptions because prefetchQuery can't accept the heterogeneous
@@ -50,4 +56,5 @@ export const ALL_QUERIES = [
   projectsQuery,
   contactsQuery,
   statisticQuery,
+  frontendVersionQuery,
 ] as readonly import("@tanstack/react-query").FetchQueryOptions[];
