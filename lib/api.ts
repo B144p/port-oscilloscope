@@ -32,7 +32,8 @@ export const getAboutMe = () => fetchJson<AboutMe>("/v1/about-me");
 export const getEducation = () => fetchJson<EducationEntry[]>("/v1/education");
 export const getExperience = () =>
   fetchJson<ExperienceEntry[]>("/v1/experience");
-export const getProjects = () => fetchJson<Project[]>("/v1/project");
+export const getProjects = async () =>
+  (await fetchJson<Project[]>("/v1/project")).sort((a, b) => a.order - b.order);
 export const getContacts = () => fetchJson<Contact[]>("/v1/contact");
 export const getStatistic = () => fetchJson<Statistic>("/v1/statistic");
 export const getFrontendVersion = () =>

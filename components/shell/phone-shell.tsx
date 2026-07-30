@@ -19,11 +19,7 @@ import { StatisticsSection } from "@/components/sections/statistics";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useChannel } from "@/hooks/use-channel";
 import { formatRange } from "@/lib/format";
-import {
-  getProjectStatus,
-  projectSlug,
-  PROJECT_STATUS_META,
-} from "@/lib/project-utils";
+import { projectSlug, projectStatusMeta } from "@/lib/project-utils";
 import {
   aboutMeQuery,
   educationQuery,
@@ -199,7 +195,7 @@ function ProjectsPhone() {
 
   const items: AccordionItem[] = (projects ?? []).map((project) => {
     const slug = projectSlug(project);
-    const status = PROJECT_STATUS_META[getProjectStatus(project)];
+    const status = projectStatusMeta(project.status);
     return {
       id: slug,
       label: project.title,

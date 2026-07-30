@@ -8,11 +8,7 @@ import { Monitor } from "@/components/monitor";
 import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
 import { useChannel } from "@/hooks/use-channel";
 import { formatRange } from "@/lib/format";
-import {
-  getProjectStatus,
-  projectSlug,
-  PROJECT_STATUS_META,
-} from "@/lib/project-utils";
+import { projectSlug, projectStatusMeta } from "@/lib/project-utils";
 import {
   aboutMeQuery,
   contactsQuery,
@@ -172,7 +168,7 @@ function ProjectsPanel() {
     <div className="flex flex-col">
       {projects?.map((project, i) => {
         const slug = projectSlug(project);
-        const status = PROJECT_STATUS_META[getProjectStatus(project)];
+        const status = projectStatusMeta(project.status);
         const active = activeSlug ? activeSlug === slug : i === 0;
         return (
           <Link

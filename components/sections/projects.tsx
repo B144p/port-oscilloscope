@@ -4,12 +4,9 @@ import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { DataReadout } from "@/components/data-readout";
 import { EmptyState, ErrorState, LoadingState } from "@/components/states";
-import {
-  getProjectStatus,
-  PROJECT_STATUS_META,
-  resolveProject,
-} from "@/lib/project-utils";
+import { projectStatusMeta, resolveProject } from "@/lib/project-utils";
 import { projectsQuery } from "@/lib/queries";
+import type { Project } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 /** `preview` is either a live demo or a source repo — never both — so one button, labeled by host. */
@@ -23,6 +20,18 @@ function previewLabel(url: string): string {
   }
 }
 
+/** `sources[]` supersedes `preview`; it's empty everywhere in the DB today,
+ *  so `preview` stays as the fallback until sources are backfilled. */
+function projectLinks(
+  project: Project,
+): { key: string; title: string; url: string }[] {
+  if (project.sources.length)
+    return project.sources.map((s) => ({ key: s.id, title: s.title, url: s.url }));
+  return project.preview
+    ? [{ key: "preview", title: previewLabel(project.preview), url: project.preview }]
+    : [];
+}
+
 /** §5.4 PROJECTS — instrument readout for the selected project. */
 export function ProjectsSection() {
   const params = useParams<{ slug?: string[] }>();
@@ -34,8 +43,8 @@ export function ProjectsSection() {
   if (!data.length) return <EmptyState />;
 
   const project = (slug ? resolveProject(data, slug) : undefined) ?? data[0];
-  const status = PROJECT_STATUS_META[getProjectStatus(project)];
-  const linkLabel = project.preview ? previewLabel(project.preview) : null;
+  const status = projectStatusMeta(project.status);
+  const links = projectLinks(project);
 
   return (
     <DataReadout
@@ -68,19 +77,24 @@ export function ProjectsSection() {
             </span>
           ),
         },
-        ...(project.preview && linkLabel
+        ...(links.length
           ? [
               {
-                label: linkLabel,
+                label: "SOURCES",
                 value: (
-                  <a
-                    href={project.preview}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex w-fit items-center gap-1 rounded-lg border border-green-dim px-2 py-0.5 text-[11px] uppercase tracking-[0.05em] text-green-mid transition-colors hover:border-green-bright hover:text-green-bright"
-                  >
-                    OPEN {linkLabel} ↗
-                  </a>
+                  <span className="flex flex-wrap gap-2">
+                    {links.map((link) => (
+                      <a
+                        key={link.key}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex w-fit items-center gap-1 rounded-lg border border-green-dim px-2 py-0.5 text-[11px] uppercase tracking-[0.05em] text-green-mid transition-colors hover:border-green-bright hover:text-green-bright"
+                      >
+                        OPEN {link.title} ↗
+                      </a>
+                    ))}
+                  </span>
                 ),
               },
             ]
