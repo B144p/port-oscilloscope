@@ -16,8 +16,9 @@ import { ContactSection } from "@/components/sections/contact";
 import { HomeSection } from "@/components/sections/home";
 import { ProjectsSection } from "@/components/sections/projects";
 import { StatisticsSection } from "@/components/sections/statistics";
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetFooter, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useChannel } from "@/hooks/use-channel";
+import { useViewCount } from "@/hooks/use-view-count";
 import { formatRange } from "@/lib/format";
 import { projectSlug, projectStatusMeta } from "@/lib/project-utils";
 import {
@@ -231,6 +232,7 @@ function HomePhone() {
 export function PhoneShell() {
   const { pathname, channel } = useChannel();
   const [menuOpen, setMenuOpen] = useState(false);
+  const views = useViewCount();
 
   return (
     <div className="flex h-dvh flex-col gap-[14px] p-[14px] md:hidden">
@@ -288,6 +290,9 @@ export function PhoneShell() {
                   );
                 })}
               </nav>
+              <SheetFooter className="border-t border-green-dim/40 text-[11px] uppercase tracking-[0.05em] text-text-muted">
+                <span title="this version / all versions">VIEWS: {views}</span>
+              </SheetFooter>
             </SheetContent>
           </Sheet>
         </span>
