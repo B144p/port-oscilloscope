@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useIdentity } from "@/hooks/use-identity";
 import { CHANNELS, SITE_CONFIG } from "@/lib/site-config";
 
 /**
@@ -8,6 +9,7 @@ import { CHANNELS, SITE_CONFIG } from "@/lib/site-config";
  * permitted; it stays out of the primary UI entirely.
  */
 export function EasterEggTerminal() {
+  const { handle } = useIdentity();
   const [open, setOpen] = useState(false);
   const [lines, setLines] = useState<string[]>([
     "OSCILLOSCOPE SUBSHELL v0.1 — TYPE 'help'",
@@ -46,9 +48,7 @@ export function EasterEggTerminal() {
         out = ["AVAILABLE: whoami · sudo · ls · clear · exit"];
         break;
       case "whoami":
-        out = [
-          `OPERATOR: ${SITE_CONFIG.handle} // CLEARANCE: ${SITE_CONFIG.clearance}`,
-        ];
+        out = [`OPERATOR: ${handle} // CLEARANCE: ${SITE_CONFIG.clearance}`];
         break;
       case "sudo":
         out = [

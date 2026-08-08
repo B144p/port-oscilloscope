@@ -1,4 +1,4 @@
-import type { Project } from "@/lib/types";
+import type { Project, ProjectStatusValue } from "@/lib/types";
 
 export function slugify(title: string): string {
   return title
@@ -22,21 +22,23 @@ export function resolveProject(
   );
 }
 
-export type ProjectStatus = "active" | "in-progress" | "archived";
-
-/**
- * The API only exposes inProgress today; "archived" is kept in the union so a
- * future backend field only touches this function.
- */
-export function getProjectStatus(project: Project): ProjectStatus {
-  return project.inProgress ? "in-progress" : "active";
-}
-
 export const PROJECT_STATUS_META: Record<
-  ProjectStatus,
+  ProjectStatusValue,
   { label: string; colorClass: string }
 > = {
-  active: { label: "ACTIVE", colorClass: "text-green-bright" },
-  "in-progress": { label: "IN PROGRESS", colorClass: "text-amber" },
-  archived: { label: "ARCHIVED", colorClass: "text-red-alert" },
+  ACTIVE: { label: "ACTIVE", colorClass: "text-green-bright" },
+  IN_PROGRESS: { label: "IN PROGRESS", colorClass: "text-amber" },
+  HOLD: { label: "ON HOLD", colorClass: "text-red-alert" },
+  PLANNING: { label: "PLANNING", colorClass: "text-text-muted" },
 };
+
+/** Status is typed but arrives as untyped JSON — an unrecognized value must
+ *  not crash the readout. */
+export function projectStatusMeta(status: string) {
+  return (
+    PROJECT_STATUS_META[status as ProjectStatusValue] ?? {
+      label: status,
+      colorClass: "text-text-muted",
+    }
+  );
+}

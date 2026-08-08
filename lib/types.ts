@@ -5,6 +5,13 @@ export interface AboutMe {
   intro: string;
   bio: string | null;
   mission: string | null;
+  displayName: string | null;
+  handle: string | null;
+  role: string | null;
+  location: string | null;
+  avatar: string | null;
+  resumeUrl: string | null;
+  availability: string | null;
 }
 
 export interface EducationDescription {
@@ -44,14 +51,26 @@ export interface ProjectTag {
   tag: string;
 }
 
+export interface ProjectSource {
+  id: string;
+  projectId: string;
+  title: string;
+  url: string;
+}
+
+/** Mirrors the ProjectStatus enum in port-server's Prisma schema. */
+export type ProjectStatusValue = "IN_PROGRESS" | "ACTIVE" | "HOLD" | "PLANNING";
+
 export interface Project {
   id: string;
   title: string;
   description: string;
   preview: string | null;
   logo: string | null;
-  inProgress: boolean;
+  status: ProjectStatusValue;
+  order: number;
   tags: ProjectTag[];
+  sources: ProjectSource[];
 }
 
 export interface Contact {
@@ -98,4 +117,25 @@ export interface Statistic {
   languages: LanguageStat[];
   operatingSystems: OsStat[];
   contributions: Contribution[];
+}
+
+export interface FrontendVersion {
+  id: string;
+  key: string;
+  url: string;
+  title: string;
+  description: string | null;
+  thumbnail: string | null;
+  show: boolean;
+  order: number;
+  views: number;
+  /** ISO 8601 */
+  createdAt: string;
+  updatedAt: string;
+}
+
+/** GET /v1/frontend-version — server filters `show:false` and sorts by `order`. */
+export interface FrontendVersionCatalog {
+  totalViews: number;
+  versions: FrontendVersion[];
 }

@@ -3,6 +3,7 @@
 import { useState, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import { Clock } from "@/components/shell/clock";
+import { useViewCount } from "@/hooks/use-view-count";
 
 function pad(n: number): string {
   return String(n).padStart(2, "0");
@@ -28,6 +29,7 @@ export function LogStrip() {
     () => true,
     () => false,
   );
+  const views = useViewCount();
 
   const [log, setLog] = useState<{ path: string | null; lines: string[] }>({
     path: null,
@@ -45,7 +47,7 @@ export function LogStrip() {
     <div className="col-span-3 hidden items-center justify-between gap-4 overflow-hidden whitespace-nowrap text-[11px] text-text-muted md:flex">
       <span className="truncate">{latest ?? "[--:--:--] SYSTEM IDLE"}</span>
       <span className="flex shrink-0 items-center gap-4">
-        <span>VIEWS: ---</span>
+        <span title="this version / all versions">VIEWS: {views}</span>
         <Clock />
       </span>
     </div>
