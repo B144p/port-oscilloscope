@@ -37,7 +37,6 @@ This app reads its content from a separate backend API — it renders nothing me
    ```
 
    ```
-   NEXT_PUBLIC_API_URL=http://localhost:3000
    API_URL=http://localhost:3000
    PROXY_SHARED_SECRET=
    ```

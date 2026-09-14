@@ -1,15 +1,8 @@
 import "server-only";
+import { FRONTEND_VERSION_KEY } from "@/features/frontend-version/keys";
 
 const API_URL = process.env.API_URL ?? "http://localhost:3000";
 const PROXY_SHARED_SECRET = process.env.PROXY_SHARED_SECRET;
-
-/**
- * Must match a FrontendVersion.key row in port-server — it identifies this
- * frontend for view counting and CORS. Kept in code, not an env var: it is
- * a property of this repo, and `.gitignore` ignores `.env*` so an env var
- * would be invisible to every deploy target.
- */
-export const FRONTEND_VERSION_KEY = "port-oscilloscope";
 
 /**
  * Server-side read with no version header, so it never counts as a page

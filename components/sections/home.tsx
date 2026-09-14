@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useAboutMe } from "@/features/about-me/client";
 import { ErrorState, LoadingState } from "@/components/states";
 import { useIdentity } from "@/hooks/use-identity";
-import { aboutMeQuery } from "@/lib/queries";
 import { cn } from "@/lib/utils";
 
 export function HomeSection() {
-  const { data, isPending, isError, refetch } = useQuery(aboutMeQuery);
+  const { data, isPending, isError, refetch } = useAboutMe();
   const { handle, role, isPending: identityPending } = useIdentity();
   // §5.4 — typewriter reveal on first load only. sessionStorage is
   // read after mount; SSR and replays render the handle statically.

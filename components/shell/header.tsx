@@ -1,15 +1,12 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { ChannelSwitch } from "@/components/channel-switch";
 import { Monitor } from "@/components/monitor";
+import { useContacts } from "@/features/contact/client";
+import { useEducation } from "@/features/education/client";
+import { useExperience } from "@/features/experience/client";
+import { useProjects } from "@/features/project/client";
 import { useChannel } from "@/hooks/use-channel";
-import {
-  contactsQuery,
-  educationQuery,
-  experienceQuery,
-  projectsQuery,
-} from "@/lib/queries";
 import { SITE_CONFIG } from "@/lib/site-config";
 
 /**
@@ -18,10 +15,10 @@ import { SITE_CONFIG } from "@/lib/site-config";
  */
 export function Header() {
   const { channel } = useChannel();
-  const { data: education } = useQuery(educationQuery);
-  const { data: experience } = useQuery(experienceQuery);
-  const { data: projects } = useQuery(projectsQuery);
-  const { data: contacts } = useQuery(contactsQuery);
+  const { data: education } = useEducation();
+  const { data: experience } = useExperience();
+  const { data: projects } = useProjects();
+  const { data: contacts } = useContacts();
 
   const readout = (() => {
     switch (channel.label) {

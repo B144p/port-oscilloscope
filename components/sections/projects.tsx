@@ -1,12 +1,10 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
 import { DataReadout } from "@/components/data-readout";
 import { EmptyState, ErrorState, LoadingState } from "@/components/states";
+import { useProjects, type Project } from "@/features/project/client";
 import { projectStatusMeta, resolveProject } from "@/lib/project-utils";
-import { projectsQuery } from "@/lib/queries";
-import type { Project } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 /** `preview` is either a live demo or a source repo — never both — so one button, labeled by host. */
@@ -36,7 +34,7 @@ function projectLinks(
 export function ProjectsSection() {
   const params = useParams<{ slug?: string[] }>();
   const slug = params.slug?.[0];
-  const { data, isPending, isError, refetch } = useQuery(projectsQuery);
+  const { data, isPending, isError, refetch } = useProjects();
 
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState onRetry={refetch} />;

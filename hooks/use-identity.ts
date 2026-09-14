@@ -1,5 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
-import { aboutMeQuery } from "@/lib/queries";
+import { useAboutMe } from "@/features/about-me/client";
 import { IDENTITY_FALLBACK } from "@/lib/site-config";
 
 /**
@@ -11,7 +10,7 @@ export function useIdentity(): {
   role: string;
   isPending: boolean;
 } {
-  const { data, isPending } = useQuery(aboutMeQuery);
+  const { data, isPending } = useAboutMe();
   return {
     handle: data?.handle ?? IDENTITY_FALLBACK.handle,
     role: data?.role ?? IDENTITY_FALLBACK.role,

@@ -1,18 +1,15 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
 import { DataReadout } from "@/components/data-readout";
 import { EmptyState, ErrorState, LoadingState } from "@/components/states";
+import { useAboutMe } from "@/features/about-me/client";
+import { useEducation } from "@/features/education/client";
+import { useExperience } from "@/features/experience/client";
 import { formatRange } from "@/lib/format";
-import {
-  aboutMeQuery,
-  educationQuery,
-  experienceQuery,
-} from "@/lib/queries";
 
 export function Overall() {
-  const { data, isPending, isError, refetch } = useQuery(aboutMeQuery);
+  const { data, isPending, isError, refetch } = useAboutMe();
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState onRetry={refetch} />;
   const paragraphs = [data.intro, data.bio, data.mission].filter(
@@ -31,7 +28,7 @@ export function Overall() {
 }
 
 export function Education({ entryId }: { entryId?: string }) {
-  const { data, isPending, isError, refetch } = useQuery(educationQuery);
+  const { data, isPending, isError, refetch } = useEducation();
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState onRetry={refetch} />;
   if (!data.length) return <EmptyState />;
@@ -57,7 +54,7 @@ export function Education({ entryId }: { entryId?: string }) {
 }
 
 export function Experience({ entryId }: { entryId?: string }) {
-  const { data, isPending, isError, refetch } = useQuery(experienceQuery);
+  const { data, isPending, isError, refetch } = useExperience();
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState onRetry={refetch} />;
   if (!data.length) return <EmptyState />;

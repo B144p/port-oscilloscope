@@ -8,7 +8,7 @@ import {
 } from "recharts";
 import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import { formatHours } from "@/lib/format";
-import type { LanguageStat } from "@/lib/types";
+import type { LanguageStat } from "@/features/statistic/client";
 
 /** A 35-axis radar is noise — chart the top slice, list the rest below. */
 const RADAR_AXES = 6;

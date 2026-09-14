@@ -1,8 +1,26 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
-import { ALL_QUERIES } from "@/lib/queries";
+import { useQueryClient, type FetchQueryOptions } from "@tanstack/react-query";
+import { aboutMeQuery } from "@/features/about-me/client";
+import { contactsQuery } from "@/features/contact/client";
+import { educationQuery } from "@/features/education/client";
+import { experienceQuery } from "@/features/experience/client";
+import { frontendVersionQuery } from "@/features/frontend-version/client";
+import { projectsQuery } from "@/features/project/client";
+import { statisticQuery } from "@/features/statistic/client";
+
+/** Widened to FetchQueryOptions because prefetchQuery can't accept the
+ *  heterogeneous union the tuple would otherwise infer. */
+const ALL_QUERIES = [
+  aboutMeQuery,
+  educationQuery,
+  experienceQuery,
+  projectsQuery,
+  contactsQuery,
+  statisticQuery,
+  frontendVersionQuery,
+] as readonly FetchQueryOptions[];
 
 const BOOT_LINES = [
   "INITIALIZING OSCILLOSCOPE INTERFACE...",
