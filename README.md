@@ -38,7 +38,16 @@ This app reads its content from a separate backend API — it renders nothing me
 
    ```
    NEXT_PUBLIC_API_URL=http://localhost:3000
+   API_URL=http://localhost:3000
+   PROXY_SHARED_SECRET=
    ```
+
+   `API_URL` is server-only and is what `lib/backend.ts` and `app/api/*`
+   route handlers actually call — the browser never talks to the backend
+   directly. `PROXY_SHARED_SECRET` must match the backend's, so that
+   `app/api/*` can forward the visitor's real IP for accurate view
+   counting; leave both secrets unset in development if the backend's
+   `PROXY_SHARED_SECRET` is also unset.
 
 3. Run the dev server:
 
