@@ -41,8 +41,8 @@ This app reads its content from a separate backend API — it renders nothing me
    PROXY_SHARED_SECRET=
    ```
 
-   `API_URL` is server-only and is what `lib/backend.ts` and `app/api/*`
-   route handlers actually call — the browser never talks to the backend
+   `API_URL` is required and server-only (startup fails without it); it's
+   what `lib/backend.ts` and `app/api/*` route handlers actually call — the browser never talks to the backend
    directly. `PROXY_SHARED_SECRET` must match the backend's, so that
    `app/api/*` can forward the visitor's real IP for accurate view
    counting; leave both secrets unset in development if the backend's
@@ -53,13 +53,13 @@ This app reads its content from a separate backend API — it renders nothing me
    `TRUST_FORWARDED_FOR=true` is set behind another proxy that sets it.
    Served directly, a visitor could spoof the header, so it's ignored.
 
-3. Run the dev server:
+3. Run the dev server (port-server also defaults to 3000, so pick another port):
 
    ```bash
-   pnpm dev
+   pnpm dev -p 3100
    ```
 
-   Open [http://localhost:3000](http://localhost:3000).
+   Open [http://localhost:3100](http://localhost:3100).
 
 ## Project structure
 
