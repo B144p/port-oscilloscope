@@ -22,6 +22,12 @@ export const frontendVersionQuery = queryOptions({
   queryKey: frontendVersionKeys.all,
   queryFn: fetchFrontendVersion,
   staleTime: 0,
+  // The client default (staleTime: Infinity, no refetch triggers) doesn't
+  // apply here since staleTime is 0 — without these, a tab refocus or a
+  // network reconnect would each fire another counted ping, turning "one
+  // view per visit" into "one view per refocus."
+  refetchOnWindowFocus: false,
+  refetchOnReconnect: false,
 });
 
 export function useFrontendVersion() {
