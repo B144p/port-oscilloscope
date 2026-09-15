@@ -10,7 +10,9 @@ function makeQueryClient(): QueryClient {
       queries: {
         staleTime: Infinity,
         refetchOnWindowFocus: false,
-        retry: 1,
+        // Never retry during server rendering: a down backend would otherwise hold
+        // the render for the fetch timeout twice over. Browsers still retry once.
+        retry: isServer ? 0 : 1,
       },
     },
   });
