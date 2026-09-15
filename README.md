@@ -66,7 +66,10 @@ components/monitor.tsx    # shared bezeled "monitor" chassis used across the she
 components/boot-sequence.tsx
 components/scanlines.tsx
 components/easter-egg/    # hidden terminal (`~` to toggle)
-lib/api.ts                # fetch client for the backend API
-lib/queries.ts            # TanStack Query definitions
+app/api/                  # BFF route handlers — proxy features/*/server to the backend
+features/*/server/        # server-only reads of the backend (SSR prefetch)
+features/*/client/        # React Query hooks — fetch this app's own /api/*, never the backend
+lib/backend.ts             # the only file that reads API_URL / PROXY_SHARED_SECRET
+lib/query-client.ts        # React Query client (server: fresh per request, browser: singleton)
 lib/site-config.ts         # channel list, hero handle/role, build metadata
 ```
