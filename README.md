@@ -48,6 +48,11 @@ This app reads its content from a separate backend API — it renders nothing me
    counting; leave both secrets unset in development if the backend's
    `PROXY_SHARED_SECRET` is also unset.
 
+   The visitor IP comes from `X-Forwarded-For`, which is only trusted on
+   Vercel (it overwrites the header at its edge) or when
+   `TRUST_FORWARDED_FOR=true` is set behind another proxy that sets it.
+   Served directly, a visitor could spoof the header, so it's ignored.
+
 3. Run the dev server:
 
    ```bash
