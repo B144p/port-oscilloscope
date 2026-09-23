@@ -1,10 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { EmptyState, ErrorState, LoadingState } from "@/components/states";
-import { contactsQuery } from "@/lib/queries";
-import type { Contact } from "@/lib/types";
+import { useContacts, type Contact } from "@/features/contact/client";
 
 function isExternal(url: string): boolean {
   return /^https?:\/\//.test(url);
@@ -71,7 +69,7 @@ function ContactRow({ contact }: { contact: Contact }) {
 
 /** §5.4 CONTACT */
 export function ContactSection() {
-  const { data, isPending, isError, refetch } = useQuery(contactsQuery);
+  const { data, isPending, isError, refetch } = useContacts();
 
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState onRetry={refetch} />;

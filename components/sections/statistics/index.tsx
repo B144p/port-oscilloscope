@@ -1,10 +1,8 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
 import { EmptyState, ErrorState, LoadingState } from "@/components/states";
-import { statisticQuery } from "@/lib/queries";
-import type { Statistic } from "@/lib/types";
+import { useStatistic, type Statistic } from "@/features/statistic/client";
 import { ContributionChart } from "./contribution-chart";
 import { GaugeRow } from "./gauge-row";
 import { LanguageRadar } from "./language-radar";
@@ -61,7 +59,7 @@ function OperatingSystem({ statistic }: { statistic: Statistic }) {
 export function StatisticsSection() {
   const params = useParams<{ view?: string[] }>();
   const [view = "languages"] = params.view ?? [];
-  const { data, isPending, isError, refetch } = useQuery(statisticQuery);
+  const { data, isPending, isError, refetch } = useStatistic();
 
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState onRetry={refetch} />;

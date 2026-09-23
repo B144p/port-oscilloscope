@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { EmptyState } from "@/components/states";
 import { formatDayLabel, formatHours, MONTHS } from "@/lib/format";
-import type { Contribution, Statistic } from "@/lib/types";
+import type { Contribution, Statistic } from "@/features/statistic/client";
 import { cn } from "@/lib/utils";
 
 const WEEKS = 53;

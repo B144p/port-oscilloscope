@@ -2,21 +2,18 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
 import { ChannelSwitch } from "@/components/channel-switch";
 import { Monitor } from "@/components/monitor";
 import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
+import { useAboutMe } from "@/features/about-me/client";
+import { useContacts } from "@/features/contact/client";
+import { useEducation } from "@/features/education/client";
+import { useExperience } from "@/features/experience/client";
+import { useProjects } from "@/features/project/client";
+import { useStatistic } from "@/features/statistic/client";
 import { useChannel } from "@/hooks/use-channel";
 import { formatRange } from "@/lib/format";
 import { projectSlug, projectStatusMeta } from "@/lib/project-utils";
-import {
-  aboutMeQuery,
-  contactsQuery,
-  educationQuery,
-  experienceQuery,
-  projectsQuery,
-  statisticQuery,
-} from "@/lib/queries";
 import { cn } from "@/lib/utils";
 
 function PanelLink({
@@ -53,7 +50,7 @@ function PanelLink({
 }
 
 function HomePanel() {
-  const { data: aboutMe } = useQuery(aboutMeQuery);
+  const { data: aboutMe } = useAboutMe();
   const quote =
     aboutMe?.mission ?? "Signal locked. All instruments nominal.";
   return (
@@ -67,8 +64,8 @@ function HomePanel() {
 function AboutPanel() {
   const params = useParams<{ view?: string[] }>();
   const [view = "overall", entryId] = params.view ?? [];
-  const { data: education } = useQuery(educationQuery);
-  const { data: experience } = useQuery(experienceQuery);
+  const { data: education } = useEducation();
+  const { data: experience } = useExperience();
 
   return (
     <div className="flex flex-col">
@@ -120,7 +117,7 @@ function AboutPanel() {
 function StatisticsPanel() {
   const params = useParams<{ view?: string[] }>();
   const [view = "languages"] = params.view ?? [];
-  const { data: statistic } = useQuery(statisticQuery);
+  const { data: statistic } = useStatistic();
 
   return (
     <div className="flex flex-col gap-4">
@@ -162,7 +159,7 @@ function StatisticsPanel() {
 function ProjectsPanel() {
   const params = useParams<{ slug?: string[] }>();
   const activeSlug = params.slug?.[0];
-  const { data: projects } = useQuery(projectsQuery);
+  const { data: projects } = useProjects();
 
   return (
     <div className="flex flex-col">
@@ -192,7 +189,7 @@ function ProjectsPanel() {
 }
 
 function ContactPanel() {
-  const { data: contacts } = useQuery(contactsQuery);
+  const { data: contacts } = useContacts();
   return (
     <div className="flex flex-col">
       {contacts?.map((contact) => (

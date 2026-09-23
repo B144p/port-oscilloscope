@@ -1,4 +1,4 @@
-import type { Project, ProjectStatusValue } from "@/lib/types";
+import type { Project, ProjectStatusValue } from "@/features/project/client";
 
 export function slugify(title: string): string {
   return title

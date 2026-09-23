@@ -4,7 +4,7 @@ import { Cell, Pie, PieChart, Sector } from "recharts";
 import type { PieSectorShapeProps } from "recharts";
 import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import { formatHours, formatPercent } from "@/lib/format";
-import type { OsStat } from "@/lib/types";
+import type { OsStat } from "@/features/statistic/client";
 
 /** §5.4v2 — ring/bar fills reserve amber/red for status meaning elsewhere. */
 export const OS_FILL_VARS = ["--green-bright", "--green-mid", "--green-dim"];

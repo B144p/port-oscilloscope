@@ -37,16 +37,29 @@ This app reads its content from a separate backend API — it renders nothing me
    ```
 
    ```
-   NEXT_PUBLIC_API_URL=http://localhost:3000
+   API_URL=http://localhost:3000
+   PROXY_SHARED_SECRET=
    ```
 
-3. Run the dev server:
+   `API_URL` is required and server-only (startup fails without it); it's
+   what `lib/backend.ts` and `app/api/*` route handlers actually call — the browser never talks to the backend
+   directly. `PROXY_SHARED_SECRET` must match the backend's, so that
+   `app/api/*` can forward the visitor's real IP for accurate view
+   counting; leave both secrets unset in development if the backend's
+   `PROXY_SHARED_SECRET` is also unset.
+
+   The visitor IP comes from `X-Forwarded-For`, which is only trusted on
+   Vercel (it overwrites the header at its edge) or when
+   `TRUST_FORWARDED_FOR=true` is set behind another proxy that sets it.
+   Served directly, a visitor could spoof the header, so it's ignored.
+
+3. Run the dev server (port-server also defaults to 3000, so pick another port):
 
    ```bash
-   pnpm dev
+   pnpm dev -p 3100
    ```
 
-   Open [http://localhost:3000](http://localhost:3000).
+   Open [http://localhost:3100](http://localhost:3100).
 
 ## Project structure
 
@@ -58,7 +71,10 @@ components/monitor.tsx    # shared bezeled "monitor" chassis used across the she
 components/boot-sequence.tsx
 components/scanlines.tsx
 components/easter-egg/    # hidden terminal (`~` to toggle)
-lib/api.ts                # fetch client for the backend API
-lib/queries.ts            # TanStack Query definitions
+app/api/                  # BFF route handlers — proxy features/*/server to the backend
+features/*/server/        # server-only reads of the backend (SSR prefetch)
+features/*/client/        # React Query hooks — fetch this app's own /api/*, never the backend
+lib/backend.ts             # the only file that reads API_URL / PROXY_SHARED_SECRET
+lib/query-client.ts        # React Query client (server: fresh per request, browser: singleton)
 lib/site-config.ts         # channel list, hero handle/role, build metadata
 ```
