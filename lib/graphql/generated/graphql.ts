@@ -18,17 +18,17 @@ export type Scalars = {
 
 export type AboutMe = {
   __typename?: 'AboutMe';
-  availability?: Maybe<Scalars['String']['output']>;
-  avatar?: Maybe<Scalars['String']['output']>;
-  bio?: Maybe<Scalars['String']['output']>;
-  displayName?: Maybe<Scalars['String']['output']>;
-  handle?: Maybe<Scalars['String']['output']>;
+  availability: Maybe<Scalars['String']['output']>;
+  avatar: Maybe<Scalars['String']['output']>;
+  bio: Maybe<Scalars['String']['output']>;
+  displayName: Maybe<Scalars['String']['output']>;
+  handle: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   intro: Scalars['String']['output'];
-  location?: Maybe<Scalars['String']['output']>;
-  mission?: Maybe<Scalars['String']['output']>;
-  resumeUrl?: Maybe<Scalars['String']['output']>;
-  role?: Maybe<Scalars['String']['output']>;
+  location: Maybe<Scalars['String']['output']>;
+  mission: Maybe<Scalars['String']['output']>;
+  resumeUrl: Maybe<Scalars['String']['output']>;
+  role: Maybe<Scalars['String']['output']>;
 };
 
 export type AiUsage = {
@@ -65,7 +65,7 @@ export type AiUsageModel = {
   cacheReadTokens: Scalars['Float']['output'];
   cacheWriteTokens: Scalars['Float']['output'];
   /** Null when the model has no row in AiModelPrice. */
-  estimatedCostUsd?: Maybe<Scalars['Float']['output']>;
+  estimatedCostUsd: Maybe<Scalars['Float']['output']>;
   inputTokens: Scalars['Float']['output'];
   model: Scalars['String']['output'];
   outputTokens: Scalars['Float']['output'];
@@ -75,8 +75,8 @@ export type AiUsageModel = {
 
 export type AiUsageRange = {
   __typename?: 'AiUsageRange';
-  from?: Maybe<Scalars['String']['output']>;
-  to?: Maybe<Scalars['String']['output']>;
+  from: Maybe<Scalars['String']['output']>;
+  to: Maybe<Scalars['String']['output']>;
 };
 
 export type AiUsageTotals = {
@@ -107,7 +107,7 @@ export type Contribution = {
 export type Education = {
   __typename?: 'Education';
   descriptions: Array<EducationDescription>;
-  endDate?: Maybe<Scalars['Int']['output']>;
+  endDate: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
   startDate: Scalars['Int']['output'];
   title: Scalars['String']['output'];
@@ -122,7 +122,7 @@ export type EducationDescription = {
 export type Experience = {
   __typename?: 'Experience';
   company: Scalars['String']['output'];
-  endDate?: Maybe<Scalars['Int']['output']>;
+  endDate: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
   responsibilities: Array<ExperienceResponsibility>;
   role: Scalars['String']['output'];
@@ -137,11 +137,11 @@ export type ExperienceResponsibility = {
 
 export type FrontendVersion = {
   __typename?: 'FrontendVersion';
-  description?: Maybe<Scalars['String']['output']>;
+  description: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   key: Scalars['String']['output'];
   order: Scalars['Int']['output'];
-  thumbnail?: Maybe<Scalars['String']['output']>;
+  thumbnail: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
   url: Scalars['String']['output'];
   views: Scalars['Int']['output'];
@@ -157,9 +157,9 @@ export type Project = {
   __typename?: 'Project';
   description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
-  logo?: Maybe<Scalars['String']['output']>;
+  logo: Maybe<Scalars['String']['output']>;
   order: Scalars['Int']['output'];
-  preview?: Maybe<Scalars['String']['output']>;
+  preview: Maybe<Scalars['String']['output']>;
   sources: Array<ProjectSource>;
   status: ProjectStatus;
   tags: Array<ProjectTag>;
@@ -187,19 +187,19 @@ export type ProjectTag = {
 
 export type Query = {
   __typename?: 'Query';
-  aboutMe?: Maybe<AboutMe>;
-  aiUsage?: Maybe<AiUsage>;
-  contact?: Maybe<Contact>;
-  contacts?: Maybe<Array<Contact>>;
-  education?: Maybe<Education>;
-  educations?: Maybe<Array<Education>>;
-  experience?: Maybe<Experience>;
-  experiences?: Maybe<Array<Experience>>;
-  frontendVersions?: Maybe<FrontendVersionList>;
+  aboutMe: Maybe<AboutMe>;
+  aiUsage: Maybe<AiUsage>;
+  contact: Maybe<Contact>;
+  contacts: Maybe<Array<Contact>>;
+  education: Maybe<Education>;
+  educations: Maybe<Array<Education>>;
+  experience: Maybe<Experience>;
+  experiences: Maybe<Array<Experience>>;
+  frontendVersions: Maybe<FrontendVersionList>;
   graphqlStatus: Scalars['Boolean']['output'];
-  project?: Maybe<Project>;
-  projects?: Maybe<Array<Project>>;
-  statistic?: Maybe<Statistic>;
+  project: Maybe<Project>;
+  projects: Maybe<Array<Project>>;
+  statistic: Maybe<Statistic>;
 };
 
 
@@ -235,12 +235,12 @@ export type QueryStatisticArgs = {
 
 export type Statistic = {
   __typename?: 'Statistic';
-  bestDay?: Maybe<StatisticBestDay>;
+  bestDay: Maybe<StatisticBestDay>;
   categories: Array<StatisticCategory>;
   contributions: Array<Contribution>;
   /** Seconds per coding day */
-  dailyAverage?: Maybe<Scalars['Int']['output']>;
-  dailyAverageHumanReadable?: Maybe<Scalars['String']['output']>;
+  dailyAverage: Maybe<Scalars['Int']['output']>;
+  dailyAverageHumanReadable: Maybe<Scalars['String']['output']>;
   editors: Array<StatisticEditor>;
   endDate: Scalars['Int']['output'];
   excluded: Array<Scalars['String']['output']>;
@@ -297,14 +297,14 @@ export type StatisticOs = {
   totalSeconds: Scalars['Int']['output'];
 };
 
-export type AboutMeFieldsFragment = { __typename?: 'AboutMe', id: string, intro: string, bio?: string | null, mission?: string | null, displayName?: string | null, handle?: string | null, role?: string | null, location?: string | null, avatar?: string | null, resumeUrl?: string | null, availability?: string | null };
+export type AboutMeFieldsFragment = { __typename?: 'AboutMe', id: string, intro: string, bio: string | null, mission: string | null, displayName: string | null, handle: string | null, role: string | null, location: string | null, avatar: string | null, resumeUrl: string | null, availability: string | null };
 
 export type AboutMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AboutMeQuery = { __typename?: 'Query', aboutMe?: { __typename?: 'AboutMe', id: string, intro: string, bio?: string | null, mission?: string | null, displayName?: string | null, handle?: string | null, role?: string | null, location?: string | null, avatar?: string | null, resumeUrl?: string | null, availability?: string | null } | null };
+export type AboutMeQuery = { __typename?: 'Query', aboutMe: { __typename?: 'AboutMe', id: string, intro: string, bio: string | null, mission: string | null, displayName: string | null, handle: string | null, role: string | null, location: string | null, avatar: string | null, resumeUrl: string | null, availability: string | null } | null };
 
-export type AiUsageFieldsFragment = { __typename?: 'AiUsage', unpricedModels: Array<string>, range: { __typename?: 'AiUsageRange', from?: string | null, to?: string | null }, totals: { __typename?: 'AiUsageTotals', requests: number, inputTokens: number, outputTokens: number, cacheWriteTokens: number, cacheReadTokens: number, tokens: number, estimatedCostUsd: number }, models: Array<{ __typename?: 'AiUsageModel', model: string, requests: number, inputTokens: number, outputTokens: number, cacheWriteTokens: number, cacheReadTokens: number, tokens: number, estimatedCostUsd?: number | null }>, clients: Array<{ __typename?: 'AiUsageClient', client: string, requests: number, tokens: number, percent: number }>, daily: Array<{ __typename?: 'AiUsageDay', date: string, requests: number, tokens: number, estimatedCostUsd: number, hasUnpricedModels: boolean }> };
+export type AiUsageFieldsFragment = { __typename?: 'AiUsage', unpricedModels: Array<string>, range: { __typename?: 'AiUsageRange', from: string | null, to: string | null }, totals: { __typename?: 'AiUsageTotals', requests: number, inputTokens: number, outputTokens: number, cacheWriteTokens: number, cacheReadTokens: number, tokens: number, estimatedCostUsd: number }, models: Array<{ __typename?: 'AiUsageModel', model: string, requests: number, inputTokens: number, outputTokens: number, cacheWriteTokens: number, cacheReadTokens: number, tokens: number, estimatedCostUsd: number | null }>, clients: Array<{ __typename?: 'AiUsageClient', client: string, requests: number, tokens: number, percent: number }>, daily: Array<{ __typename?: 'AiUsageDay', date: string, requests: number, tokens: number, estimatedCostUsd: number, hasUnpricedModels: boolean }> };
 
 export type AiUsageQueryVariables = Exact<{
   from?: InputMaybe<Scalars['String']['input']>;
@@ -312,54 +312,54 @@ export type AiUsageQueryVariables = Exact<{
 }>;
 
 
-export type AiUsageQuery = { __typename?: 'Query', aiUsage?: { __typename?: 'AiUsage', unpricedModels: Array<string>, range: { __typename?: 'AiUsageRange', from?: string | null, to?: string | null }, totals: { __typename?: 'AiUsageTotals', requests: number, inputTokens: number, outputTokens: number, cacheWriteTokens: number, cacheReadTokens: number, tokens: number, estimatedCostUsd: number }, models: Array<{ __typename?: 'AiUsageModel', model: string, requests: number, inputTokens: number, outputTokens: number, cacheWriteTokens: number, cacheReadTokens: number, tokens: number, estimatedCostUsd?: number | null }>, clients: Array<{ __typename?: 'AiUsageClient', client: string, requests: number, tokens: number, percent: number }>, daily: Array<{ __typename?: 'AiUsageDay', date: string, requests: number, tokens: number, estimatedCostUsd: number, hasUnpricedModels: boolean }> } | null };
+export type AiUsageQuery = { __typename?: 'Query', aiUsage: { __typename?: 'AiUsage', unpricedModels: Array<string>, range: { __typename?: 'AiUsageRange', from: string | null, to: string | null }, totals: { __typename?: 'AiUsageTotals', requests: number, inputTokens: number, outputTokens: number, cacheWriteTokens: number, cacheReadTokens: number, tokens: number, estimatedCostUsd: number }, models: Array<{ __typename?: 'AiUsageModel', model: string, requests: number, inputTokens: number, outputTokens: number, cacheWriteTokens: number, cacheReadTokens: number, tokens: number, estimatedCostUsd: number | null }>, clients: Array<{ __typename?: 'AiUsageClient', client: string, requests: number, tokens: number, percent: number }>, daily: Array<{ __typename?: 'AiUsageDay', date: string, requests: number, tokens: number, estimatedCostUsd: number, hasUnpricedModels: boolean }> } | null };
 
 export type BootQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BootQuery = { __typename?: 'Query', aboutMe?: { __typename?: 'AboutMe', id: string, intro: string, bio?: string | null, mission?: string | null, displayName?: string | null, handle?: string | null, role?: string | null, location?: string | null, avatar?: string | null, resumeUrl?: string | null, availability?: string | null } | null, educations?: Array<{ __typename?: 'Education', id: string, title: string, startDate: number, endDate?: number | null, descriptions: Array<{ __typename?: 'EducationDescription', id: string, description: string }> }> | null, experiences?: Array<{ __typename?: 'Experience', id: string, company: string, role: string, startDate: number, endDate?: number | null, responsibilities: Array<{ __typename?: 'ExperienceResponsibility', id: string, description: string }> }> | null, projects?: Array<{ __typename?: 'Project', id: string, title: string, description: string, preview?: string | null, logo?: string | null, status: ProjectStatus, order: number, tags: Array<{ __typename?: 'ProjectTag', id: string, tag: string }>, sources: Array<{ __typename?: 'ProjectSource', id: string, title: string, url: string }> }> | null, contacts?: Array<{ __typename?: 'Contact', id: string, title: string, url: string }> | null, statistic?: { __typename?: 'Statistic', id: string, startDate: number, endDate: number, totalSeconds: number, humanReadable: string, languages: Array<{ __typename?: 'StatisticLanguage', id: string, language: string, totalSeconds: number, humanReadable: string, percent: number }>, operatingSystems: Array<{ __typename?: 'StatisticOs', id: string, os: string, totalSeconds: number, humanReadable: string, percent: number }>, contributions: Array<{ __typename?: 'Contribution', id: string, date: number, totalSeconds: number }> } | null, frontendVersions?: { __typename?: 'FrontendVersionList', totalViews: number, versions: Array<{ __typename?: 'FrontendVersion', id: string, key: string, url: string, title: string, description?: string | null, thumbnail?: string | null, order: number, views: number }> } | null, aiUsage?: { __typename?: 'AiUsage', unpricedModels: Array<string>, range: { __typename?: 'AiUsageRange', from?: string | null, to?: string | null }, totals: { __typename?: 'AiUsageTotals', requests: number, inputTokens: number, outputTokens: number, cacheWriteTokens: number, cacheReadTokens: number, tokens: number, estimatedCostUsd: number }, models: Array<{ __typename?: 'AiUsageModel', model: string, requests: number, inputTokens: number, outputTokens: number, cacheWriteTokens: number, cacheReadTokens: number, tokens: number, estimatedCostUsd?: number | null }>, clients: Array<{ __typename?: 'AiUsageClient', client: string, requests: number, tokens: number, percent: number }>, daily: Array<{ __typename?: 'AiUsageDay', date: string, requests: number, tokens: number, estimatedCostUsd: number, hasUnpricedModels: boolean }> } | null };
+export type BootQuery = { __typename?: 'Query', aboutMe: { __typename?: 'AboutMe', id: string, intro: string, bio: string | null, mission: string | null, displayName: string | null, handle: string | null, role: string | null, location: string | null, avatar: string | null, resumeUrl: string | null, availability: string | null } | null, educations: Array<{ __typename?: 'Education', id: string, title: string, startDate: number, endDate: number | null, descriptions: Array<{ __typename?: 'EducationDescription', id: string, description: string }> }> | null, experiences: Array<{ __typename?: 'Experience', id: string, company: string, role: string, startDate: number, endDate: number | null, responsibilities: Array<{ __typename?: 'ExperienceResponsibility', id: string, description: string }> }> | null, projects: Array<{ __typename?: 'Project', id: string, title: string, description: string, preview: string | null, logo: string | null, status: ProjectStatus, order: number, tags: Array<{ __typename?: 'ProjectTag', id: string, tag: string }>, sources: Array<{ __typename?: 'ProjectSource', id: string, title: string, url: string }> }> | null, contacts: Array<{ __typename?: 'Contact', id: string, title: string, url: string }> | null, statistic: { __typename?: 'Statistic', id: string, startDate: number, endDate: number, totalSeconds: number, humanReadable: string, languages: Array<{ __typename?: 'StatisticLanguage', id: string, language: string, totalSeconds: number, humanReadable: string, percent: number }>, operatingSystems: Array<{ __typename?: 'StatisticOs', id: string, os: string, totalSeconds: number, humanReadable: string, percent: number }>, contributions: Array<{ __typename?: 'Contribution', id: string, date: number, totalSeconds: number }> } | null, frontendVersions: { __typename?: 'FrontendVersionList', totalViews: number, versions: Array<{ __typename?: 'FrontendVersion', id: string, key: string, url: string, title: string, description: string | null, thumbnail: string | null, order: number, views: number }> } | null, aiUsage: { __typename?: 'AiUsage', unpricedModels: Array<string>, range: { __typename?: 'AiUsageRange', from: string | null, to: string | null }, totals: { __typename?: 'AiUsageTotals', requests: number, inputTokens: number, outputTokens: number, cacheWriteTokens: number, cacheReadTokens: number, tokens: number, estimatedCostUsd: number }, models: Array<{ __typename?: 'AiUsageModel', model: string, requests: number, inputTokens: number, outputTokens: number, cacheWriteTokens: number, cacheReadTokens: number, tokens: number, estimatedCostUsd: number | null }>, clients: Array<{ __typename?: 'AiUsageClient', client: string, requests: number, tokens: number, percent: number }>, daily: Array<{ __typename?: 'AiUsageDay', date: string, requests: number, tokens: number, estimatedCostUsd: number, hasUnpricedModels: boolean }> } | null };
 
 export type ContactFieldsFragment = { __typename?: 'Contact', id: string, title: string, url: string };
 
 export type ContactsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ContactsQuery = { __typename?: 'Query', contacts?: Array<{ __typename?: 'Contact', id: string, title: string, url: string }> | null };
+export type ContactsQuery = { __typename?: 'Query', contacts: Array<{ __typename?: 'Contact', id: string, title: string, url: string }> | null };
 
-export type EducationFieldsFragment = { __typename?: 'Education', id: string, title: string, startDate: number, endDate?: number | null, descriptions: Array<{ __typename?: 'EducationDescription', id: string, description: string }> };
+export type EducationFieldsFragment = { __typename?: 'Education', id: string, title: string, startDate: number, endDate: number | null, descriptions: Array<{ __typename?: 'EducationDescription', id: string, description: string }> };
 
 export type EducationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EducationsQuery = { __typename?: 'Query', educations?: Array<{ __typename?: 'Education', id: string, title: string, startDate: number, endDate?: number | null, descriptions: Array<{ __typename?: 'EducationDescription', id: string, description: string }> }> | null };
+export type EducationsQuery = { __typename?: 'Query', educations: Array<{ __typename?: 'Education', id: string, title: string, startDate: number, endDate: number | null, descriptions: Array<{ __typename?: 'EducationDescription', id: string, description: string }> }> | null };
 
-export type ExperienceFieldsFragment = { __typename?: 'Experience', id: string, company: string, role: string, startDate: number, endDate?: number | null, responsibilities: Array<{ __typename?: 'ExperienceResponsibility', id: string, description: string }> };
+export type ExperienceFieldsFragment = { __typename?: 'Experience', id: string, company: string, role: string, startDate: number, endDate: number | null, responsibilities: Array<{ __typename?: 'ExperienceResponsibility', id: string, description: string }> };
 
 export type ExperiencesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ExperiencesQuery = { __typename?: 'Query', experiences?: Array<{ __typename?: 'Experience', id: string, company: string, role: string, startDate: number, endDate?: number | null, responsibilities: Array<{ __typename?: 'ExperienceResponsibility', id: string, description: string }> }> | null };
+export type ExperiencesQuery = { __typename?: 'Query', experiences: Array<{ __typename?: 'Experience', id: string, company: string, role: string, startDate: number, endDate: number | null, responsibilities: Array<{ __typename?: 'ExperienceResponsibility', id: string, description: string }> }> | null };
 
-export type FrontendVersionsFieldsFragment = { __typename?: 'FrontendVersionList', totalViews: number, versions: Array<{ __typename?: 'FrontendVersion', id: string, key: string, url: string, title: string, description?: string | null, thumbnail?: string | null, order: number, views: number }> };
+export type FrontendVersionsFieldsFragment = { __typename?: 'FrontendVersionList', totalViews: number, versions: Array<{ __typename?: 'FrontendVersion', id: string, key: string, url: string, title: string, description: string | null, thumbnail: string | null, order: number, views: number }> };
 
 export type FrontendVersionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FrontendVersionsQuery = { __typename?: 'Query', frontendVersions?: { __typename?: 'FrontendVersionList', totalViews: number, versions: Array<{ __typename?: 'FrontendVersion', id: string, key: string, url: string, title: string, description?: string | null, thumbnail?: string | null, order: number, views: number }> } | null };
+export type FrontendVersionsQuery = { __typename?: 'Query', frontendVersions: { __typename?: 'FrontendVersionList', totalViews: number, versions: Array<{ __typename?: 'FrontendVersion', id: string, key: string, url: string, title: string, description: string | null, thumbnail: string | null, order: number, views: number }> } | null };
 
-export type ProjectFieldsFragment = { __typename?: 'Project', id: string, title: string, description: string, preview?: string | null, logo?: string | null, status: ProjectStatus, order: number, tags: Array<{ __typename?: 'ProjectTag', id: string, tag: string }>, sources: Array<{ __typename?: 'ProjectSource', id: string, title: string, url: string }> };
+export type ProjectFieldsFragment = { __typename?: 'Project', id: string, title: string, description: string, preview: string | null, logo: string | null, status: ProjectStatus, order: number, tags: Array<{ __typename?: 'ProjectTag', id: string, tag: string }>, sources: Array<{ __typename?: 'ProjectSource', id: string, title: string, url: string }> };
 
 export type ProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProjectsQuery = { __typename?: 'Query', projects?: Array<{ __typename?: 'Project', id: string, title: string, description: string, preview?: string | null, logo?: string | null, status: ProjectStatus, order: number, tags: Array<{ __typename?: 'ProjectTag', id: string, tag: string }>, sources: Array<{ __typename?: 'ProjectSource', id: string, title: string, url: string }> }> | null };
+export type ProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: string, title: string, description: string, preview: string | null, logo: string | null, status: ProjectStatus, order: number, tags: Array<{ __typename?: 'ProjectTag', id: string, tag: string }>, sources: Array<{ __typename?: 'ProjectSource', id: string, title: string, url: string }> }> | null };
 
 export type StatisticFieldsFragment = { __typename?: 'Statistic', id: string, startDate: number, endDate: number, totalSeconds: number, humanReadable: string, languages: Array<{ __typename?: 'StatisticLanguage', id: string, language: string, totalSeconds: number, humanReadable: string, percent: number }>, operatingSystems: Array<{ __typename?: 'StatisticOs', id: string, os: string, totalSeconds: number, humanReadable: string, percent: number }>, contributions: Array<{ __typename?: 'Contribution', id: string, date: number, totalSeconds: number }> };
 
 export type StatisticQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type StatisticQuery = { __typename?: 'Query', statistic?: { __typename?: 'Statistic', id: string, startDate: number, endDate: number, totalSeconds: number, humanReadable: string, languages: Array<{ __typename?: 'StatisticLanguage', id: string, language: string, totalSeconds: number, humanReadable: string, percent: number }>, operatingSystems: Array<{ __typename?: 'StatisticOs', id: string, os: string, totalSeconds: number, humanReadable: string, percent: number }>, contributions: Array<{ __typename?: 'Contribution', id: string, date: number, totalSeconds: number }> } | null };
+export type StatisticQuery = { __typename?: 'Query', statistic: { __typename?: 'Statistic', id: string, startDate: number, endDate: number, totalSeconds: number, humanReadable: string, languages: Array<{ __typename?: 'StatisticLanguage', id: string, language: string, totalSeconds: number, humanReadable: string, percent: number }>, operatingSystems: Array<{ __typename?: 'StatisticOs', id: string, os: string, totalSeconds: number, humanReadable: string, percent: number }>, contributions: Array<{ __typename?: 'Contribution', id: string, date: number, totalSeconds: number }> } | null };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String

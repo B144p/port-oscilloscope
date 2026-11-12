@@ -25,6 +25,10 @@ const config: CodegenConfig = {
         documentMode: "string",
         enumsAsTypes: true,
         useTypeImports: true,
+        // A selected field is always present in the response (null when
+        // empty), so `bio: string | null`, not `bio?: string | null`.
+        // Variables stay optional.
+        avoidOptionals: { field: true, inputValue: false },
       },
     },
   },

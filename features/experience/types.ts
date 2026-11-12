@@ -1,15 +1,5 @@
-export interface Responsibility {
-  id: string;
-  experienceId: string;
-  description: string;
-}
+import type { ExperienceFieldsFragment } from "@/lib/graphql/generated/graphql";
 
-export interface ExperienceEntry {
-  id: string;
-  company: string;
-  role: string;
-  /** Unix seconds */
-  startDate: number;
-  endDate: number | null;
-  responsibilities: Responsibility[];
-}
+/** Shape selected by ExperienceFields; startDate/endDate are Unix seconds. */
+export type ExperienceEntry = ExperienceFieldsFragment;
+export type Responsibility = ExperienceEntry["responsibilities"][number];
