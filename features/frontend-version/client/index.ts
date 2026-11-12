@@ -14,7 +14,7 @@ async function fetchFrontendVersion(): Promise<FrontendVersionCatalog> {
 // staleTime: 0 (unlike every other feature, which inherits the client's
 // staleTime: Infinity default) is deliberate: this is the one query that's
 // also how a visit gets counted. Hydrated SSR data is immediately stale,
-// so mount triggers one real refetch through /api/frontend-version —
+// so mount triggers one real refetch through /api/graphql —
 // carrying the visitor's IP for port-server's view-count dedupe — instead
 // of silently reusing the server's (view-count-silent) prefetch forever.
 export const frontendVersionQuery = queryOptions({

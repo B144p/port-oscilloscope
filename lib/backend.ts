@@ -18,25 +18,10 @@ const TRUST_FORWARDED_FOR =
   process.env.VERCEL === "1" || process.env.TRUST_FORWARDED_FOR === "true";
 
 /**
- * Server-side read with no version header, so it never counts as a page
- * view. Use this from Server Components / prefetch — never from a Route
- * Handler that a browser can call, since that IS a view.
- */
-export async function backendGet<T>(
-  path: string,
-  { revalidate = 60 }: { revalidate?: number } = {},
-): Promise<T> {
-  const res = await fetch(`${API_URL}${path}`, {
-    next: { revalidate },
-    signal: AbortSignal.timeout(5000),
-  });
-  if (!res.ok) throw new Error(`LINK FAILURE // ${res.status} ${path}`);
-  return res.json() as Promise<T>;
-}
-
-/**
- * Server-side GraphQL read, same rules as backendGet: no version header,
- * so it never counts as a page view. Sent as GET so Next.js caches it by
+ * Server-side GraphQL read with no version header, so it never counts as a
+ * page view. Use this from Server Components / prefetch — never from a
+ * Route Handler that a browser can call, since that IS a view (that's
+ * proxyGraphql below). Sent as GET so Next.js caches it by
  * URL like any other read (its fetch cache and dedupe are documented for
  * GET); Apollo's CSRF prevention requires the preflight header on GET.
  *
@@ -119,10 +104,6 @@ async function relay(url: string, init: RequestInit): Promise<Response> {
       headers: { "content-type": "application/json" },
     });
   }
-}
-
-export async function proxyGet(request: Request, path: string): Promise<Response> {
-  return relay(`${API_URL}${path}`, { headers: forwardHeaders(request) });
 }
 
 /**
