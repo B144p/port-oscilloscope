@@ -61,6 +61,20 @@ This app reads its content from a separate backend API — it renders nothing me
 
    Open [http://localhost:3100](http://localhost:3100).
 
+### GraphQL types
+
+Data comes from port-server's GraphQL API. Operation types are generated
+from port-server's committed schema (`../port-server/src/schema.gql`, so
+both repos must sit side by side) into `lib/graphql/generated/`, which is
+committed so builds never need port-server. After a schema change, or after
+editing a `features/*/*.graphql.ts` document:
+
+```bash
+pnpm codegen
+```
+
+and commit the regenerated files with the change.
+
 ## Project structure
 
 ```
