@@ -63,15 +63,16 @@ export async function backendGraphql<TResult, TVariables>(
 }
 
 /**
- * Used by app/api/*\/route.ts handlers — the only fetches a browser can
- * actually trigger. Forwards enough of the visitor's own request that
- * port-server can attribute the view and rate-limit correctly:
- * X-Visitor-Ip + X-Proxy-Secret let port-server's trusted-proxy middleware
- * substitute the visitor's IP for this server's IP (see port-server's
- * trusted-proxy.middleware.ts) so view-count dedupe and rate limiting stay
- * per-visitor instead of collapsing onto this Next server's IP.
+ * Headers for a browser-triggered request (app/api/*\/route.ts handlers —
+ * the only fetches a browser can actually trigger). Forwards enough of the
+ * visitor's own request that port-server can attribute the view and
+ * rate-limit correctly: X-Visitor-Ip + X-Proxy-Secret let port-server's
+ * trusted-proxy middleware substitute the visitor's IP for this server's IP
+ * (see port-server's trusted-proxy.middleware.ts) so view-count dedupe and
+ * rate limiting stay per-visitor instead of collapsing onto this Next
+ * server's IP.
  */
-export async function proxyGet(request: Request, path: string): Promise<Response> {
+function forwardHeaders(request: Request): Record<string, string> {
   const headers: Record<string, string> = {
     "X-Frontend-Version": FRONTEND_VERSION_KEY,
   };
@@ -95,10 +96,14 @@ export async function proxyGet(request: Request, path: string): Promise<Response
     const value = request.headers.get(name);
     if (value) headers[name] = value;
   }
+  return headers;
+}
 
+/** Streams port-server's answer back; never leaks the backend URL. */
+async function relay(url: string, init: RequestInit): Promise<Response> {
   try {
-    const res = await fetch(`${API_URL}${path}`, {
-      headers,
+    const res = await fetch(url, {
+      ...init,
       cache: "no-store",
       signal: AbortSignal.timeout(5000),
     });
@@ -114,6 +119,28 @@ export async function proxyGet(request: Request, path: string): Promise<Response
       headers: { "content-type": "application/json" },
     });
   }
+}
+
+export async function proxyGet(request: Request, path: string): Promise<Response> {
+  return relay(`${API_URL}${path}`, { headers: forwardHeaders(request) });
+}
+
+/**
+ * Browser-triggered GraphQL, so it carries the visitor headers and counts
+ * as a view. POST with a JSON body (a non-simple request, so Apollo's CSRF
+ * prevention lets it through). The caller passes a document it already
+ * allow-listed — never a query string taken from the browser.
+ */
+export async function proxyGraphql(
+  request: Request,
+  query: string,
+  variables?: Record<string, unknown>,
+): Promise<Response> {
+  return relay(`${API_URL}/graphql`, {
+    method: "POST",
+    headers: { ...forwardHeaders(request), "content-type": "application/json" },
+    body: JSON.stringify(variables ? { query, variables } : { query }),
+  });
 }
 
 function missingEnv(name: string): never {
