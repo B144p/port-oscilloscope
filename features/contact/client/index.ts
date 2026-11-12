@@ -1,13 +1,13 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
+import { fetchSection } from "@/lib/graphql/client";
+import { ContactsDocument } from "../contact.graphql";
 import { contactKeys } from "../keys";
 import type { Contact } from "../types";
 
 export type { Contact };
 
 async function fetchContacts(): Promise<Contact[]> {
-  const res = await fetch("/api/contact");
-  if (!res.ok) throw new Error(`LINK FAILURE // ${res.status} /contact`);
-  return res.json() as Promise<Contact[]>;
+  return fetchSection(ContactsDocument, "contacts");
 }
 
 export const contactsQuery = queryOptions({

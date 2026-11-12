@@ -7,6 +7,7 @@ import { educationKeys } from "@/features/education/keys";
 import { experienceKeys } from "@/features/experience/keys";
 import { frontendVersionKeys } from "@/features/frontend-version/keys";
 import { projectKeys } from "@/features/project/keys";
+import { sortProjects } from "@/features/project/order";
 import { statisticKeys } from "@/features/statistic/keys";
 import { backendGraphql } from "@/lib/backend";
 import { BootDocument } from "./boot.graphql";
@@ -37,7 +38,7 @@ export async function prefetchAll(queryClient: QueryClient): Promise<void> {
   seed(aboutMeKeys.all, data.aboutMe);
   seed(educationKeys.all, data.educations);
   seed(experienceKeys.all, data.experiences);
-  seed(projectKeys.all, data.projects);
+  seed(projectKeys.all, data.projects && sortProjects(data.projects));
   seed(contactKeys.all, data.contacts);
   seed(statisticKeys.all, data.statistic);
   seed(frontendVersionKeys.all, data.frontendVersions);
