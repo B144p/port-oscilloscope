@@ -5,14 +5,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { AppShell } from "@/components/shell/app-shell";
 import { Providers } from "@/components/providers";
-import { prefetchAboutMe } from "@/features/about-me/server";
-import { prefetchContacts } from "@/features/contact/server";
-import { prefetchEducation } from "@/features/education/server";
-import { prefetchExperience } from "@/features/experience/server";
-import { prefetchFrontendVersion } from "@/features/frontend-version/server";
-import { prefetchProjects } from "@/features/project/server";
-import { prefetchAiUsage } from "@/features/ai-usage/server";
-import { prefetchStatistic } from "@/features/statistic/server";
+import { prefetchAll } from "@/features/boot/server";
 import { getQueryClient } from "@/lib/query-client";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -33,18 +26,10 @@ export default async function RootLayout({
 }>) {
   // AppShell mounts every section's data hook up front (desktop and phone
   // layouts are both always mounted, one hidden by CSS — see phone-shell.tsx),
-  // so every query gets prefetched here rather than per-page.
+  // so every query gets prefetched here rather than per-page — in one
+  // GraphQL request (see features/boot/server.ts).
   const queryClient = getQueryClient();
-  await Promise.all([
-    prefetchAboutMe(queryClient),
-    prefetchEducation(queryClient),
-    prefetchExperience(queryClient),
-    prefetchProjects(queryClient),
-    prefetchContacts(queryClient),
-    prefetchStatistic(queryClient),
-    prefetchAiUsage(queryClient),
-    prefetchFrontendVersion(queryClient),
-  ]);
+  await prefetchAll(queryClient);
 
   return (
     <html

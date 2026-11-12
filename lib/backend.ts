@@ -1,5 +1,7 @@
 import "server-only";
 import { FRONTEND_VERSION_KEY } from "@/features/frontend-version/keys";
+import type { TypedDocumentString } from "@/lib/graphql/generated/graphql";
+import type { GraphQLResponse } from "@/lib/graphql/types";
 
 // No fallback: the obvious default (localhost:3000) is also Next's own dev
 // port, so a missing API_URL would quietly make this app proxy to itself.
@@ -30,6 +32,34 @@ export async function backendGet<T>(
   });
   if (!res.ok) throw new Error(`LINK FAILURE // ${res.status} ${path}`);
   return res.json() as Promise<T>;
+}
+
+/**
+ * Server-side GraphQL read, same rules as backendGet: no version header,
+ * so it never counts as a page view. Sent as GET so Next.js caches it by
+ * URL like any other read (its fetch cache and dedupe are documented for
+ * GET); Apollo's CSRF prevention requires the preflight header on GET.
+ *
+ * Throws only when the request itself fails (network, 4xx/5xx). A section
+ * that fails inside an otherwise good response comes back null with an
+ * entry in `errors` — the caller decides what to do with partial data.
+ * Note a partial response is cached like any 200 for `revalidate` seconds;
+ * the browser recovers that section through /api/graphql meanwhile.
+ */
+export async function backendGraphql<TResult, TVariables>(
+  document: TypedDocumentString<TResult, TVariables>,
+  variables?: TVariables,
+  { revalidate = 60 }: { revalidate?: number } = {},
+): Promise<GraphQLResponse<TResult>> {
+  const params = new URLSearchParams({ query: document.toString() });
+  if (variables) params.set("variables", JSON.stringify(variables));
+  const res = await fetch(`${API_URL}/graphql?${params}`, {
+    headers: { "apollo-require-preflight": "true" },
+    next: { revalidate },
+    signal: AbortSignal.timeout(5000),
+  });
+  if (!res.ok) throw new Error(`LINK FAILURE // ${res.status} /graphql`);
+  return res.json() as Promise<GraphQLResponse<TResult>>;
 }
 
 /**
