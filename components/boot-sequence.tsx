@@ -8,6 +8,7 @@ import { educationQuery } from "@/features/education/client";
 import { experienceQuery } from "@/features/experience/client";
 import { frontendVersionQuery } from "@/features/frontend-version/client";
 import { projectsQuery } from "@/features/project/client";
+import { aiUsageQuery } from "@/features/ai-usage/client";
 import { statisticQuery } from "@/features/statistic/client";
 
 /** Widened to FetchQueryOptions because prefetchQuery can't accept the
@@ -19,6 +20,7 @@ const ALL_QUERIES = [
   projectsQuery,
   contactsQuery,
   statisticQuery,
+  aiUsageQuery("all"),
   frontendVersionQuery,
 ] as readonly FetchQueryOptions[];
 

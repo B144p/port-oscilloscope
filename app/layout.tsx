@@ -11,6 +11,7 @@ import { prefetchEducation } from "@/features/education/server";
 import { prefetchExperience } from "@/features/experience/server";
 import { prefetchFrontendVersion } from "@/features/frontend-version/server";
 import { prefetchProjects } from "@/features/project/server";
+import { prefetchAiUsage } from "@/features/ai-usage/server";
 import { prefetchStatistic } from "@/features/statistic/server";
 import { getQueryClient } from "@/lib/query-client";
 
@@ -41,6 +42,7 @@ export default async function RootLayout({
     prefetchProjects(queryClient),
     prefetchContacts(queryClient),
     prefetchStatistic(queryClient),
+    prefetchAiUsage(queryClient),
     prefetchFrontendVersion(queryClient),
   ]);
 
