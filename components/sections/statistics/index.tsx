@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 import { EmptyState, ErrorState, LoadingState } from "@/components/states";
 import { useStatistic, type Statistic } from "@/features/statistic/client";
+import { AiUsage } from "./ai-usage";
 import { ContributionChart } from "./contribution-chart";
 import { GaugeRow } from "./gauge-row";
 import { LanguageRadar } from "./language-radar";
@@ -60,6 +61,10 @@ export function StatisticsSection() {
   const params = useParams<{ view?: string[] }>();
   const [view = "languages"] = params.view ?? [];
   const { data, isPending, isError, refetch } = useStatistic();
+
+  // Own data source: render before the WakaTime guards so its outage
+  // doesn't take this view down too.
+  if (view === "ai-usage") return <AiUsage />;
 
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState onRetry={refetch} />;
