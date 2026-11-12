@@ -151,6 +151,11 @@ function StatisticsPanel() {
           label="CONTRIBUTIONS"
           active={view === "contributions"}
         />
+        <PanelLink
+          href="/statistics/ai-usage"
+          label="AI USAGE"
+          active={view === "ai-usage"}
+        />
       </div>
     </div>
   );

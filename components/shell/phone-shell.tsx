@@ -158,6 +158,7 @@ function StatisticsPhone() {
     { id: "languages", label: "LANGUAGES", href: "/statistics" },
     { id: "operating-system", label: "OPERATING SYSTEM", href: "/statistics/operating-system" },
     { id: "contributions", label: "CONTRIBUTIONS", href: "/statistics/contributions" },
+    { id: "ai-usage", label: "AI USAGE", href: "/statistics/ai-usage" },
   ].map((item) => ({
     ...item,
     content: <StatisticsSection />,
