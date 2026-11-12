@@ -4,7 +4,7 @@ import { useId, useMemo } from "react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import type { AiUsage } from "@/features/ai-usage/client";
-import { formatCompact, formatIsoDay, MONTHS } from "@/lib/format";
+import { formatCompact, formatIsoDay, formatUsd, MONTHS } from "@/lib/format";
 
 const chartConfig = {
   tokens: { label: "Tokens", color: "var(--green-bright)" },
@@ -60,7 +60,7 @@ function WaveTooltip({
 }) {
   if (!active || !payload?.length) return null;
   const p = payload[0].payload;
-  const cost = `${p.unpriced ? "≥ " : ""}$${p.cost.toFixed(2)}`;
+  const cost = formatUsd(p.cost, { lowerBound: p.unpriced });
   return (
     <div className="rounded-lg border border-green-dim bg-bg-raised px-2 py-1 text-[11px] uppercase tracking-[0.05em]">
       <span className="text-green-bright">{formatIsoDay(p.date)}</span>
