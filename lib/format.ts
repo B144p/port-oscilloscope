@@ -31,3 +31,31 @@ export function formatHours(totalSeconds: number): string {
 export function formatPercent(percent: number): string {
   return `${percent.toFixed(1)}%`;
 }
+
+const COMPACT_UNITS = [
+  { value: 1e9, suffix: "B" },
+  { value: 1e6, suffix: "M" },
+  { value: 1e3, suffix: "K" },
+];
+
+/** Large counts → "1.2K" / "3.4M" / "5.6B"; token sums pass 2^31 quickly. */
+export function formatCompact(n: number): string {
+  for (const { value, suffix } of COMPACT_UNITS) {
+    if (Math.abs(n) >= value) {
+      const scaled = n / value;
+      return `${scaled >= 100 ? Math.round(scaled) : scaled.toFixed(1)}${suffix}`;
+    }
+  }
+  return String(Math.round(n));
+}
+
+/** USD, e.g. "$12.34"; `lowerBound` marks a sum that skips unpriced models. */
+export function formatUsd(n: number, { lowerBound = false } = {}): string {
+  const amount = n > 0 && n < 0.01 ? "<$0.01" : `$${n.toFixed(2)}`;
+  return lowerBound ? `≥ ${amount}` : amount;
+}
+
+/** "2026-07-20" → "JUL 20, 2026", read as a UTC day like the rest of this file. */
+export function formatIsoDay(isoDay: string): string {
+  return formatDayLabel(Date.parse(`${isoDay}T00:00:00Z`) / 1000);
+}
