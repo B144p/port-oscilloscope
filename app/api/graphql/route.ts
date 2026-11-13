@@ -13,6 +13,12 @@ const DOCUMENTS: Readonly<Record<string, string>> = Object.fromEntries(
   ),
 );
 
+/**
+ * Seconds. Above lib/backend.ts's 30s relay timeout, so on a backend cold
+ * start the relay's own 502 fires before the platform kills the function.
+ */
+export const maxDuration = 35;
+
 function badRequest(message: string): Response {
   return Response.json({ message }, { status: 400 });
 }
