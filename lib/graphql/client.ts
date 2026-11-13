@@ -33,6 +33,10 @@ export async function fetchSection<
 
   const body = (await res.json()) as GraphQLResponse<TResult>;
   const section = body.data?.[root];
-  if (section == null) throw new Error(`LINK FAILURE // ${root}`);
+  if (section == null) {
+    // The message stays the generic on-screen LINK FAILURE; port-server's
+    // own errors ride along as `cause` for DevTools / error.cause.
+    throw new Error(`LINK FAILURE // ${root}`, { cause: body.errors });
+  }
   return section;
 }
