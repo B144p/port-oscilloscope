@@ -24,11 +24,21 @@ import { BootDocument } from "./boot.graphql";
  * layout must render even when the backend is down.
  */
 export async function prefetchAll(queryClient: QueryClient): Promise<void> {
-  let data;
+  let response;
   try {
-    ({ data } = await backendGraphql(BootDocument));
-  } catch {
+    response = await backendGraphql(BootDocument);
+  } catch (error) {
+    // Logged, not thrown: the page still renders and the browser recovers
+    // each section, but a backend outage or schema mismatch shows up here.
+    console.error("[boot] prefetch failed:", error);
     return;
+  }
+  const { data, errors } = response;
+  if (errors?.length) {
+    console.error(
+      "[boot] partial response:",
+      errors.map((e) => `${e.path?.join(".") ?? "(query)"}: ${e.message}`),
+    );
   }
   if (!data) return;
 

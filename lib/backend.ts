@@ -43,7 +43,13 @@ export async function backendGraphql<TResult, TVariables>(
     next: { revalidate },
     signal: AbortSignal.timeout(5000),
   });
-  if (!res.ok) throw new Error(`LINK FAILURE // ${res.status} /graphql`);
+  if (!res.ok) {
+    // Keep port-server's reason (e.g. a complexity or validation error) in
+    // the server log; this message never reaches the browser.
+    const body = (await res.json().catch(() => null)) as GraphQLResponse<unknown> | null;
+    const reason = body?.errors?.map((e) => e.message).join("; ");
+    throw new Error(`LINK FAILURE // ${res.status} /graphql${reason ? ` — ${reason}` : ""}`);
+  }
   return res.json() as Promise<GraphQLResponse<TResult>>;
 }
 
