@@ -1,13 +1,14 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
+import { fetchSection } from "@/lib/graphql/client";
+import { ProjectsDocument } from "../project.graphql";
+import { sortProjects } from "../order";
 import { projectKeys } from "../keys";
 import type { Project } from "../types";
 
 export type { Project, ProjectStatusValue, ProjectTag, ProjectSource } from "../types";
 
 async function fetchProjects(): Promise<Project[]> {
-  const res = await fetch("/api/project");
-  if (!res.ok) throw new Error(`LINK FAILURE // ${res.status} /project`);
-  return ((await res.json()) as Project[]).sort((a, b) => a.order - b.order);
+  return sortProjects(await fetchSection(ProjectsDocument, "projects"));
 }
 
 export const projectsQuery = queryOptions({

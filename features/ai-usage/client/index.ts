@@ -1,4 +1,6 @@
 import { keepPreviousData, queryOptions, useQuery } from "@tanstack/react-query";
+import { fetchSection } from "@/lib/graphql/client";
+import { AiUsageDocument } from "../ai-usage.graphql";
 import { aiUsageKeys } from "../keys";
 import { rangeToParams, type AiUsageRange } from "../range";
 import type { AiUsage } from "../types";
@@ -12,11 +14,13 @@ export type {
 } from "../types";
 export { AI_USAGE_RANGES, type AiUsageRange } from "../range";
 
+/** No from/to (ALL) sends no variables; port-server treats that as all time. */
 async function fetchAiUsage(params: { from?: string; to?: string }): Promise<AiUsage> {
-  const qs = new URLSearchParams(params).toString();
-  const res = await fetch(`/api/ai-usage${qs ? `?${qs}` : ""}`);
-  if (!res.ok) throw new Error(`LINK FAILURE // ${res.status} /ai-usage`);
-  return res.json() as Promise<AiUsage>;
+  return fetchSection(
+    AiUsageDocument,
+    "aiUsage",
+    params.from || params.to ? params : undefined,
+  );
 }
 
 /** Dates are resolved once, so the key and the request always describe the same window. */

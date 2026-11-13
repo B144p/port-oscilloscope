@@ -42,9 +42,9 @@ This app reads its content from a separate backend API — it renders nothing me
    ```
 
    `API_URL` is required and server-only (startup fails without it); it's
-   what `lib/backend.ts` and `app/api/*` route handlers actually call — the browser never talks to the backend
+   what `lib/backend.ts` and the `app/api/graphql` route handler actually call — the browser never talks to the backend
    directly. `PROXY_SHARED_SECRET` must match the backend's, so that
-   `app/api/*` can forward the visitor's real IP for accurate view
+   `app/api/graphql` can forward the visitor's real IP for accurate view
    counting; leave both secrets unset in development if the backend's
    `PROXY_SHARED_SECRET` is also unset.
 
@@ -61,6 +61,20 @@ This app reads its content from a separate backend API — it renders nothing me
 
    Open [http://localhost:3100](http://localhost:3100).
 
+### GraphQL types
+
+Data comes from port-server's GraphQL API. Operation types are generated
+from port-server's committed schema (`../port-server/src/schema.gql`, so
+both repos must sit side by side) into `lib/graphql/generated/`, which is
+committed so builds never need port-server. After a schema change, or after
+editing a `features/*/*.graphql.ts` document:
+
+```bash
+pnpm codegen
+```
+
+and commit the regenerated files with the change.
+
 ## Project structure
 
 ```
@@ -71,9 +85,11 @@ components/monitor.tsx    # shared bezeled "monitor" chassis used across the she
 components/boot-sequence.tsx
 components/scanlines.tsx
 components/easter-egg/    # hidden terminal (`~` to toggle)
-app/api/                  # BFF route handlers — proxy features/*/server to the backend
-features/*/server/        # server-only reads of the backend (SSR prefetch)
-features/*/client/        # React Query hooks — fetch this app's own /api/*, never the backend
+app/api/graphql/          # BFF route: forwards only operations this app ships (persisted hashes)
+features/*/*.graphql.ts   # GraphQL fragment + query per section (input to `pnpm codegen`)
+features/*/client/        # React Query hooks — fetch via this app's /api/graphql, never the backend
+features/boot/            # one Boot query that prefetches every section during SSR
+lib/graphql/              # generated types, client fetchSection helper, response types
 lib/backend.ts             # the only file that reads API_URL / PROXY_SHARED_SECRET
 lib/query-client.ts        # React Query client (server: fresh per request, browser: singleton)
 lib/site-config.ts         # channel list, hero handle/role, build metadata

@@ -1,14 +1,5 @@
-export interface EducationDescription {
-  id: string;
-  educationId: string;
-  description: string;
-}
+import type { EducationFieldsFragment } from "@/lib/graphql/generated/graphql";
 
-export interface EducationEntry {
-  id: string;
-  title: string;
-  /** Unix seconds */
-  startDate: number;
-  endDate: number | null;
-  descriptions: EducationDescription[];
-}
+/** Shape selected by EducationFields; startDate/endDate are Unix seconds. */
+export type EducationEntry = EducationFieldsFragment;
+export type EducationDescription = EducationEntry["descriptions"][number];
