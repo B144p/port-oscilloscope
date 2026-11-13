@@ -84,13 +84,21 @@ function forwardHeaders(request: Request): Record<string, string> {
   return headers;
 }
 
+/**
+ * Long enough to outlast a port-server cold start. Unlike backendGraphql's
+ * 5s (which holds the page's HTML), this runs after the page is visible,
+ * so a slow answer only extends a section's loading state — giving up early
+ * would turn every cold start into LINK FAILURE.
+ */
+const RELAY_TIMEOUT_MS = 30_000;
+
 /** Streams port-server's answer back; never leaks the backend URL. */
 async function relay(url: string, init: RequestInit): Promise<Response> {
   try {
     const res = await fetch(url, {
       ...init,
       cache: "no-store",
-      signal: AbortSignal.timeout(5000),
+      signal: AbortSignal.timeout(RELAY_TIMEOUT_MS),
     });
     return new Response(res.body, {
       status: res.status,
